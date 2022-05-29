@@ -11,7 +11,7 @@ import io.netty.handler.codec.string.StringDecoder;
 import io.netty.util.AttributeKey;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
-import org.example.client.handler.FirstHandler;
+import org.example.client.handler.FirstClientHandler;
 import org.example.common.ChatConfiguration;
 
 import java.util.concurrent.TimeUnit;
@@ -37,7 +37,7 @@ public class ChatClient {
                                 System.out.println(msg);
                             }
                         });
-                        ch.pipeline().addLast(new FirstHandler());
+                        ch.pipeline().addLast(new FirstClientHandler());
                     }
                 });
 
@@ -51,8 +51,7 @@ public class ChatClient {
                     public void operationComplete(Future<? super Void> future) throws Exception {
                         if (future.isSuccess()) {
                             System.out.println("连接成功+");
-                        }
-                        if (retry == 0) {
+                        }else if (retry == 0) {
                             System.out.println("stop ");
                         } else {
                             // 指数退避法则
