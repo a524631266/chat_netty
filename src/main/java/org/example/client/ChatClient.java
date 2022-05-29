@@ -33,8 +33,10 @@ public class ChatClient {
                         ch.pipeline().addLast(new StringDecoder());
                         ch.pipeline().addLast(new SimpleChannelInboundHandler<String>() {
                             @Override
-                            protected void channelRead0(ChannelHandlerContext channelHandlerContext, String msg) throws Exception {
+                            protected void channelRead0(ChannelHandlerContext ctx, String msg) throws Exception {
                                 System.out.println(msg);
+                                // 无效果
+                                // ctx.fireChannelRead(msg);
                             }
                         });
                         ch.pipeline().addLast(new FirstClientHandler());

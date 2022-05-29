@@ -13,6 +13,7 @@ import io.netty.util.AttributeKey;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
 import org.example.common.ChatConfiguration;
+import org.example.server.handler.ClientConnectHandler;
 import org.example.server.handler.FirstServerHandler;
 
 import java.util.Date;
@@ -37,6 +38,7 @@ public class ChatServer {
                 .childHandler(new ChannelInitializer<NioSocketChannel>() {
                     @Override
                     protected void initChannel(NioSocketChannel ch) throws Exception {
+                        ch.pipeline().addLast(new ClientConnectHandler());
                         ch.pipeline().addLast(new FirstServerHandler());
                         ch.pipeline().addLast(new StringDecoder());
                         ch.pipeline().addLast(new SimpleChannelInboundHandler<String>() {
