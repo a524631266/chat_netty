@@ -1,6 +1,8 @@
 package org.example.codec.model;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.TypeReference;
 
 public class JSONSerializer implements Serializer{
     @Override
@@ -15,6 +17,8 @@ public class JSONSerializer implements Serializer{
 
     @Override
     public <T> T deserialize(Class<T> clazz, byte[] bytes) {
-        return JSON.parseObject(bytes, clazz);
+//        JSON.parseObject(bytes, new TypeReference<clazz>(){})
+        Object o = JSONObject.parseObject(bytes, clazz);
+        return JSONObject.parseObject(bytes, clazz);
     }
 }
