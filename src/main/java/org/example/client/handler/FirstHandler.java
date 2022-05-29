@@ -16,7 +16,7 @@ public class FirstHandler extends ChannelInboundHandlerAdapter {
      */
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        System.out.println("客户端开始写数据" + new Date());
+        System.out.println(new Date() + "客户端开始写数据");
 
         // 开始给当前上下文的buffer创建数据
         ByteBuf buffer = ctx.alloc().buffer();

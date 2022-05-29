@@ -12,6 +12,9 @@ import io.netty.handler.codec.string.StringDecoder;
 import io.netty.util.AttributeKey;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
+import org.example.common.ChatConfiguration;
+
+import java.util.Date;
 
 
 /**
@@ -21,8 +24,8 @@ public class ChatServer {
     public static void main(String[] args) {
         ServerBootstrap chatBootstrap = new ServerBootstrap();
 
-        NioEventLoopGroup acceptor = new NioEventLoopGroup();
-        NioEventLoopGroup workers = new NioEventLoopGroup();
+        NioEventLoopGroup acceptor = new NioEventLoopGroup(1);
+        NioEventLoopGroup workers = new NioEventLoopGroup(4);
 
         chatBootstrap.group(acceptor, workers)
                 .channel(NioServerSocketChannel.class)
@@ -42,23 +45,23 @@ public class ChatServer {
                         });
                     }
                 });
-        autoIncBind(chatBootstrap, 8080);
+        autoIncBind(chatBootstrap);
     }
 
     /**
      * 自动递增聊天
      * @param chatBootstrap
-     * @param port
      */
-    private static void autoIncBind(ServerBootstrap chatBootstrap, int port) {
-        chatBootstrap.bind(port)
+    private static void autoIncBind(ServerBootstrap chatBootstrap) {
+        chatBootstrap.bind(ChatConfiguration.ChatServerIp, ChatConfiguration.ChatServerPort)
                 .addListener(new GenericFutureListener<Future<? super Void>>() {
                     @Override
                     public void operationComplete(Future<? super Void> future) throws Exception {
                         if (future.isSuccess()) {
-                            System.out.println("启动成功:" + port);
+                            System.out.println("启动成功:" + ChatConfiguration.ChatServerPort);
                         } else {
-                            autoIncBind(chatBootstrap, port + 1);
+                            // 不用 + 1
+                            autoIncBind(chatBootstrap);
                         }
                     }
                 });
