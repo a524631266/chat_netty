@@ -14,7 +14,7 @@ public class FirstServerHandler extends ChannelInboundHandlerAdapter {
         ByteBuf response = (ByteBuf) msg;
         System.out.println("[" + new Date() + "]: 服务器读到数据 -> " + response.toString(Charset.forName("utf-8")) );
 
-        // 可以向下传播消息，如果不设置
-//        ctx.fireChannelRead(msg);
+        //  可以向下传播消息，如果不设置
+        ctx.fireChannelRead(msg);
     }
 }
