@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <properties>
+        <!-- 日志备份目录 -->
+        <property name="LOG_HOME">./logfiles</property>
+        <property name="errorLogFileSrc">./logfiles</property>
+    </properties>
+
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss} [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+        <RollingFile name="infoLogRollingFile" fileName="${LOG_HOME}/app.log"
+                     filePattern="${LOG_HOME}-%d{yyyy-MM-dd}-%i.log">
+            <PatternLayout pattern="%d{yyyy-MM-dd 'at' HH:mm:ss z} %-5level %class{36} %L %M - %msg%xEx%n"/>
+            <!--配置1天存储一个文件-->
+            <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            <!--配置超过文件大小切割成多个文件%i区分序号，目前配一个文件20M-->
+            <SizeBasedTriggeringPolicy size="20MB"/>
+            <!-- DefaultRolloverStrategy属性如不设置，则默认为最多同一文件夹下7个文件，这里设置了20 -->
+            <DefaultRolloverStrategy max="20">
+                <Delete basePath="${infoLogFileDir}/" maxDepth="1">
+                    <IfFileName glob="*.log"/>
+                    <!--!Note: 这里的age必须和filePattern协调, 后者是精确到HH, 这里就要写成xH, xd就不起作用
+                    另外, 数字最好>2, 否则可能造成删除的时候, 最近的文件还处于被占用状态,导致删除不成功!-->
+                    <!--保留30天-->
+                    <IfLastModified age="30d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+
+        <RollingFile name="errorLogRollingFile" fileName="${errorLogFileSrc}"
+                     filePattern="${errorLogFileSrc}-%d{yyyy-MM-dd}-%i.log">
+            <PatternLayout pattern="%d{yyyy-MM-dd 'at' HH:mm:ss z} %-5level %class{36} %L %M - %msg%xEx%n"/>
+            <!--配置1天存储一个文件-->
+            <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            <!--配置超过文件大小切割成多个文件%i区分序号，目前配一个文件20M-->
+            <SizeBasedTriggeringPolicy size="20MB"/>
+            <!-- DefaultRolloverStrategy属性如不设置，则默认为最多同一文件夹下7个文件，这里设置了20 -->
+            <DefaultRolloverStrategy max="20">
+                <Delete basePath="${errorLogFileDir}/" maxDepth="1">
+                    <IfFileName glob="*.log"/>
+                    <!--!Note: 这里的age必须和filePattern协调, 后者是精确到HH, 这里就要写成xH, xd就不起作用
+                    另外, 数字最好>2, 否则可能造成删除的时候, 最近的文件还处于被占用状态,导致删除不成功!-->
+                    <!--保留30天-->
+                    <IfLastModified age="30d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <Root level="info">
+            <AppenderRef ref="Console"/>
+        </Root>
+        <Logger name="infoLog" additivity="TRUE" level="ALL">
+            <AppenderRef ref="infoLogRollingFile" level="INFO" />
+        </Logger>
+        <Logger name="errorLog" additivity="TRUE" level="ALL">
+            <AppenderRef ref="errorLogRollingFile" level="ERROR" />
+        </Logger>
+    </Loggers>
+</Configuration>
