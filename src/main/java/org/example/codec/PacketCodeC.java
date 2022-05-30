@@ -5,6 +5,24 @@ import io.netty.buffer.ByteBufAllocator;
 import org.example.codec.model.*;
 
 public class PacketCodeC {
+
+    public volatile static PacketCodeC INSTANCE;
+
+    /**
+     * double check 获取实例
+     * @return
+     */
+    public static PacketCodeC getInstance(){
+        if(INSTANCE == null) {
+            synchronized (PacketCodeC.class){
+                if(INSTANCE == null) {
+                    INSTANCE = new PacketCodeC();
+                }
+            }
+        }
+        return INSTANCE;
+    }
+
     public static final int MAGIC_NUMBER = 0x12345678;
 
     /**
@@ -16,6 +34,16 @@ public class PacketCodeC {
     public ByteBuf encode(Packet packet) {
         // 创建一个byteBuf 对象 【io是什么？？】
         ByteBuf byteBuf = ByteBufAllocator.DEFAULT.ioBuffer();
+        return encode(byteBuf, packet);
+    }
+
+    /**
+     * 一个对象序列化为一个bytebuf对象
+     *
+     * @param packet
+     * @return
+     */
+    public ByteBuf encode(ByteBuf byteBuf, Packet packet) {
         byte[] serialize = Serializer.DEFAULT.serialize(packet);
         // 编码过程方式
         byteBuf.writeInt(MAGIC_NUMBER); // 1
@@ -71,6 +99,7 @@ public class PacketCodeC {
         if(command == Command.LOGIN_REQUEST) {
             return LoginRequestPacket.class;
         }
+        // 返回 null 表示过滤
         return null;
     }
 
@@ -78,7 +107,8 @@ public class PacketCodeC {
         if(serializerAlgorithm == Serializer.JSON_SERIALIZER) {
             return Serializer.DEFAULT;
         }
-        throw new IllegalAccessException("不是支持的json序列化之外的工具");
+        // 返回 null 表示过滤
+        return null;
     }
 
 

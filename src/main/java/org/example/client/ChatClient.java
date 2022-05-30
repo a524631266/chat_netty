@@ -12,6 +12,7 @@ import io.netty.util.AttributeKey;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
 import org.example.client.handler.FirstClientHandler;
+import org.example.client.handler.LoginClientHandler;
 import org.example.common.ChatConfiguration;
 
 import java.util.concurrent.TimeUnit;
@@ -39,7 +40,8 @@ public class ChatClient {
                                 // ctx.fireChannelRead(msg);
                             }
                         });
-                        ch.pipeline().addLast(new FirstClientHandler());
+//                        ch.pipeline().addLast(new FirstClientHandler());
+                        ch.pipeline().addLast(new LoginClientHandler());
                     }
                 });
 

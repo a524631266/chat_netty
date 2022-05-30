@@ -15,6 +15,7 @@ import io.netty.util.concurrent.GenericFutureListener;
 import org.example.common.ChatConfiguration;
 import org.example.server.handler.ClientConnectHandler;
 import org.example.server.handler.FirstServerHandler;
+import org.example.server.handler.LoginServerHandler;
 
 import java.util.Date;
 
@@ -31,6 +32,7 @@ public class ChatServer {
 
         chatBootstrap.group(acceptor, workers)
                 .channel(NioServerSocketChannel.class)
+                .option(ChannelOption.SO_BACKLOG, 1024) // 1024k
                 .attr(AttributeKey.newInstance("serverName"), "chatServer")
                 .childOption(ChannelOption.SO_KEEPALIVE, true) // 开启tcp底层心跳机制
                 .childOption(ChannelOption.TCP_NODELAY, true) //无延迟，有数据马上发送
@@ -38,6 +40,7 @@ public class ChatServer {
                 .childHandler(new ChannelInitializer<NioSocketChannel>() {
                     @Override
                     protected void initChannel(NioSocketChannel ch) throws Exception {
+                        ch.pipeline().addLast(new LoginServerHandler());
                         ch.pipeline().addLast(new ClientConnectHandler());
                         ch.pipeline().addLast(new FirstServerHandler());
                         ch.pipeline().addLast(new StringDecoder());
