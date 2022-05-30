@@ -1,23 +1,17 @@
 package org.example.server;
 
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
-import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import io.netty.handler.codec.string.StringDecoder;
 import io.netty.util.AttributeKey;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
-import org.example.codec.type.PacketDecoder;
 import org.example.common.ChatConfiguration;
 
-import org.example.server.handler.LoginServerHandler;
-import org.example.server.handler.MessageServerHandler;
-
+import org.example.server.handler.*;
 
 
 /**
@@ -40,9 +34,14 @@ public class ChatServer {
                 .childHandler(new ChannelInitializer<NioSocketChannel>() {
                     @Override
                     protected void initChannel(NioSocketChannel ch) throws Exception {
-                        ch.pipeline().addLast(new LoginServerHandler());
-                        ch.pipeline().addLast(new PacketDecoder());
-                        ch.pipeline().addLast(new MessageServerHandler());
+//                        // 方法一
+//                        simpleMethod(ch);
+
+
+                        // 方法二
+                        purityMethod(ch);
+
+
 //                        ch.pipeline().addLast(new ClientConnectHandler());
 //                        ch.pipeline().addLast(new FirstServerHandler());
 //                        ch.pipeline().addLast(new StringDecoder());
@@ -52,9 +51,24 @@ public class ChatServer {
 //                                System.out.println(msg);
 //                            }
 //                        });
+
+                        //
                     }
                 });
         autoIncBind(chatBootstrap);
+    }
+
+    private static void simpleMethod(NioSocketChannel ch) {
+        ch.pipeline().addLast(new LoginServerHandler());
+        ch.pipeline().addLast(new PacketDecoder());
+        ch.pipeline().addLast(new MessageServerHandler());
+    }
+
+    private static void purityMethod(NioSocketChannel ch) {
+        ch.pipeline().addLast(new PacketDecoder());
+        ch.pipeline().addLast(new PacketEncoder());
+        ch.pipeline().addLast(new SimpleLoginRequestHandler());
+        ch.pipeline().addLast(new SimpleMessageRequestHandler());
     }
 
     /**
