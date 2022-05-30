@@ -28,7 +28,7 @@ public class ChatServer {
         ServerBootstrap chatBootstrap = new ServerBootstrap();
 
         NioEventLoopGroup acceptor = new NioEventLoopGroup(1);
-        NioEventLoopGroup workers = new NioEventLoopGroup(4);
+        NioEventLoopGroup workers = new NioEventLoopGroup(1);
 
         chatBootstrap.group(acceptor, workers)
                 .channel(NioServerSocketChannel.class)
@@ -41,15 +41,15 @@ public class ChatServer {
                     @Override
                     protected void initChannel(NioSocketChannel ch) throws Exception {
                         ch.pipeline().addLast(new LoginServerHandler());
-                        ch.pipeline().addLast(new ClientConnectHandler());
-                        ch.pipeline().addLast(new FirstServerHandler());
-                        ch.pipeline().addLast(new StringDecoder());
-                        ch.pipeline().addLast(new SimpleChannelInboundHandler<String>() {
-                            @Override
-                            protected void channelRead0(ChannelHandlerContext cx, String msg) throws Exception {
-                                System.out.println(msg);
-                            }
-                        });
+//                        ch.pipeline().addLast(new ClientConnectHandler());
+//                        ch.pipeline().addLast(new FirstServerHandler());
+//                        ch.pipeline().addLast(new StringDecoder());
+//                        ch.pipeline().addLast(new SimpleChannelInboundHandler<String>() {
+//                            @Override
+//                            protected void channelRead0(ChannelHandlerContext cx, String msg) throws Exception {
+//                                System.out.println(msg);
+//                            }
+//                        });
                     }
                 });
         autoIncBind(chatBootstrap);

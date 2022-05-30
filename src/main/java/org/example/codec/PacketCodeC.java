@@ -98,6 +98,8 @@ public class PacketCodeC {
     private Class<? extends Packet> getCommand(byte command) {
         if(command == Command.LOGIN_REQUEST) {
             return LoginRequestPacket.class;
+        } else if (command == Command.LOGIN_RESPONSE) {
+            return LoginResponsePacket.class;
         }
         // 返回 null 表示过滤
         return null;

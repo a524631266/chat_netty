@@ -7,7 +7,9 @@ import org.example.codec.PacketCodeC;
 import org.example.codec.model.LoginRequestPacket;
 import org.example.codec.model.LoginResponsePacket;
 import org.example.codec.model.Packet;
+import org.example.common.ChatConfiguration;
 
+import java.util.Date;
 import java.util.UUID;
 
 public class LoginClientHandler extends ChannelInboundHandlerAdapter {
@@ -39,11 +41,21 @@ public class LoginClientHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        ByteBuf message = (ByteBuf) msg;
-        Packet request = PacketCodeC.getInstance().decode(message);
-        if(request instanceof LoginResponsePacket) {
-            System.out.println(request);
+        // 出现粘包和拆包问题！！！！！
+        if(msg instanceof ByteBuf) {
+            ByteBuf message = (ByteBuf) msg;
+            Packet request = PacketCodeC.getInstance().decode(message);
+            if(request instanceof LoginResponsePacket) {
+                LoginResponsePacket target = (LoginResponsePacket) request;
+                if(target.getSuccess()) {
+                    ChatConfiguration.loginAttr(ctx.channel());
+                    System.out.println("[" + new Date() + "] : success " + target);
+                } else {
+                    System.out.println("[" + new Date() + "] : fail " + target.getReason());
+                }
+            }
         }
 
     }
+
 }

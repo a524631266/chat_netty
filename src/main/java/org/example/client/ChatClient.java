@@ -1,20 +1,17 @@
 package org.example.client;
 
 import io.netty.bootstrap.Bootstrap;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelInitializer;
-import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import io.netty.handler.codec.string.StringDecoder;
 import io.netty.util.AttributeKey;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
-import org.example.client.handler.FirstClientHandler;
 import org.example.client.handler.LoginClientHandler;
 import org.example.common.ChatConfiguration;
 
+import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 public class ChatClient {
@@ -31,15 +28,16 @@ public class ChatClient {
                 .handler(new ChannelInitializer<SocketChannel>() {
                     @Override
                     protected void initChannel(SocketChannel ch) throws Exception {
-                        ch.pipeline().addLast(new StringDecoder());
-                        ch.pipeline().addLast(new SimpleChannelInboundHandler<String>() {
-                            @Override
-                            protected void channelRead0(ChannelHandlerContext ctx, String msg) throws Exception {
-                                System.out.println(msg);
-                                // 无效果
-                                // ctx.fireChannelRead(msg);
-                            }
-                        });
+//                        ch.pipeline().addLast(new StringDecoder());
+//                        ch.pipeline().addLast(new SimpleChannelInboundHandler<String>() {
+//                            @Override
+//                            protected void channelRead0(ChannelHandlerContext ctx, String msg) throws Exception {
+//                                System.out.println(msg);
+//                                System.out.println(msg + 1);
+//                                // 无效果
+//                                 ctx.fireChannelRead(msg);
+//                            }
+//                        });
 //                        ch.pipeline().addLast(new FirstClientHandler());
                         ch.pipeline().addLast(new LoginClientHandler());
                     }
@@ -55,6 +53,8 @@ public class ChatClient {
                     public void operationComplete(Future<? super Void> future) throws Exception {
                         if (future.isSuccess()) {
                             System.out.println("连接成功+");
+                            Channel channel = ((ChannelFuture) future).channel();
+                            startThread(channel);
                         }else if (retry == 0) {
                             System.out.println("stop ");
                         } else {
@@ -68,5 +68,17 @@ public class ChatClient {
                         }
                     }
                 });
+    }
+
+    private static void startThread(Channel channel) {
+        new Thread(() -> {
+            while(!Thread.interrupted()){
+                if(ChatConfiguration.hasLogin(channel)){
+                    Scanner sc = new Scanner(System.in);
+                    String line = sc.nextLine();
+                };
+                System.out.println("aaas");
+            }
+        }).start();
     }
 }

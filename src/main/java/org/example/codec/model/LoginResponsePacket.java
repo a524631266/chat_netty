@@ -12,6 +12,12 @@ public class LoginResponsePacket extends Packet {
     private String password;
 
     private Boolean success;
+
+    /**
+     * 原因
+     */
+    private String reason;
+
     @Override
     public Byte getCommand() {
         return Command.LOGIN_RESPONSE;
