@@ -5,6 +5,7 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import org.example.codec.PacketCodeC;
 import org.example.codec.model.LoginRequestPacket;
+import org.example.codec.model.LoginResponsePacket;
 import org.example.codec.model.Packet;
 
 import java.util.UUID;
@@ -34,5 +35,15 @@ public class LoginClientHandler extends ChannelInboundHandlerAdapter {
 
         ctx.channel().writeAndFlush(buffer);
         // 在 writeAndFlush过程之后会自动release() 所以不需要release
+    }
+
+    @Override
+    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+        ByteBuf message = (ByteBuf) msg;
+        Packet request = PacketCodeC.getInstance().decode(message);
+        if(request instanceof LoginResponsePacket) {
+            System.out.println(request);
+        }
+
     }
 }
