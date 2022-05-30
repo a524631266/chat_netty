@@ -3,6 +3,7 @@ package org.example.client.handler;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+import lombok.extern.log4j.Log4j2;
 import org.example.codec.PacketCodeC;
 import org.example.codec.model.LoginRequestPacket;
 import org.example.codec.model.LoginResponsePacket;
@@ -11,7 +12,7 @@ import org.example.common.ChatConfiguration;
 
 import java.util.Date;
 import java.util.UUID;
-
+@Log4j2
 public class LoginClientHandler extends ChannelInboundHandlerAdapter {
     public static String password = "12345";
     public static String userName = "zll";
@@ -51,9 +52,10 @@ public class LoginClientHandler extends ChannelInboundHandlerAdapter {
                 LoginResponsePacket target = (LoginResponsePacket) request;
                 if(target.getSuccess()) {
                     ChatConfiguration.loginAttr(ctx.channel());
-                    System.out.println("[" + new Date() + "] : success " + target);
+                    log.info(" success " + target);
+                    ctx.fireChannelRead(request);
                 } else {
-                    System.out.println("[" + new Date() + "] : fail " + target.getReason());
+                    log.info(" fail " + target.getReason());
                 }
             } else {
                 message.resetReaderIndex();

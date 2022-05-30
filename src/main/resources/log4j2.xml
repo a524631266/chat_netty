@@ -29,7 +29,7 @@
             </DefaultRolloverStrategy>
         </RollingFile>
 
-        <RollingFile name="errorLogRollingFile" fileName="${errorLogFileSrc}"
+        <RollingFile name="errorLogRollingFile" fileName="${errorLogFileSrc}/error.log"
                      filePattern="${errorLogFileSrc}-%d{yyyy-MM-dd}-%i.log">
             <PatternLayout pattern="%d{yyyy-MM-dd 'at' HH:mm:ss z} %-5level %class{36} %L %M - %msg%xEx%n"/>
             <!--配置1天存储一个文件-->

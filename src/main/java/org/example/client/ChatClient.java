@@ -10,6 +10,7 @@ import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
 import org.example.client.handler.LoginClientHandler;
 import org.example.client.handler.MessageClientHandler;
+import org.example.client.handler.SimpleLoginClientHandler;
 import org.example.codec.line.LineCommandShell;
 import org.example.common.ChatConfiguration;
 
@@ -41,6 +42,7 @@ public class ChatClient {
 //                        });
 //                        ch.pipeline().addLast(new FirstClientHandler());
                         ch.pipeline().addLast(new LoginClientHandler());
+                        ch.pipeline().addLast(new SimpleLoginClientHandler());
                         ch.pipeline().addLast(new MessageClientHandler());
                     }
                 });

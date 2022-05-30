@@ -12,6 +12,7 @@ import io.netty.handler.codec.string.StringDecoder;
 import io.netty.util.AttributeKey;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
+import org.example.codec.type.PacketDecoder;
 import org.example.common.ChatConfiguration;
 
 import org.example.server.handler.LoginServerHandler;
@@ -40,6 +41,7 @@ public class ChatServer {
                     @Override
                     protected void initChannel(NioSocketChannel ch) throws Exception {
                         ch.pipeline().addLast(new LoginServerHandler());
+                        ch.pipeline().addLast(new PacketDecoder());
                         ch.pipeline().addLast(new MessageServerHandler());
 //                        ch.pipeline().addLast(new ClientConnectHandler());
 //                        ch.pipeline().addLast(new FirstServerHandler());
