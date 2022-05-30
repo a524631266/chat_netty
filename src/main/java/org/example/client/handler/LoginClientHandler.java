@@ -44,6 +44,8 @@ public class LoginClientHandler extends ChannelInboundHandlerAdapter {
         // 出现粘包和拆包问题！！！！！
         if(msg instanceof ByteBuf) {
             ByteBuf message = (ByteBuf) msg;
+            message.markReaderIndex();
+
             Packet request = PacketCodeC.getInstance().decode(message);
             if(request instanceof LoginResponsePacket) {
                 LoginResponsePacket target = (LoginResponsePacket) request;
@@ -53,6 +55,9 @@ public class LoginClientHandler extends ChannelInboundHandlerAdapter {
                 } else {
                     System.out.println("[" + new Date() + "] : fail " + target.getReason());
                 }
+            } else {
+                message.resetReaderIndex();
+                ctx.fireChannelRead(msg);
             }
         }
 

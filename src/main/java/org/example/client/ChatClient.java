@@ -9,9 +9,10 @@ import io.netty.util.AttributeKey;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
 import org.example.client.handler.LoginClientHandler;
+import org.example.client.handler.MessageClientHandler;
+import org.example.codec.line.LineCommandShell;
 import org.example.common.ChatConfiguration;
 
-import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 public class ChatClient {
@@ -40,6 +41,7 @@ public class ChatClient {
 //                        });
 //                        ch.pipeline().addLast(new FirstClientHandler());
                         ch.pipeline().addLast(new LoginClientHandler());
+                        ch.pipeline().addLast(new MessageClientHandler());
                     }
                 });
 
@@ -54,7 +56,7 @@ public class ChatClient {
                         if (future.isSuccess()) {
                             System.out.println("连接成功+");
                             Channel channel = ((ChannelFuture) future).channel();
-                            startThread(channel);
+                            LineCommandShell.startThread(channel);
                         }else if (retry == 0) {
                             System.out.println("stop ");
                         } else {
@@ -70,15 +72,5 @@ public class ChatClient {
                 });
     }
 
-    private static void startThread(Channel channel) {
-        new Thread(() -> {
-            while(!Thread.interrupted()){
-                if(ChatConfiguration.hasLogin(channel)){
-                    Scanner sc = new Scanner(System.in);
-                    String line = sc.nextLine();
-                };
-                System.out.println("aaas");
-            }
-        }).start();
-    }
+
 }

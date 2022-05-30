@@ -2,6 +2,8 @@ package org.example.codec;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
+import org.example.codec.line.model.MessageReqPacket;
+import org.example.codec.line.model.MessageRespPacket;
 import org.example.codec.model.*;
 
 public class PacketCodeC {
@@ -100,6 +102,10 @@ public class PacketCodeC {
             return LoginRequestPacket.class;
         } else if (command == Command.LOGIN_RESPONSE) {
             return LoginResponsePacket.class;
+        } else if (command == Command.MESSAGE_REQUEST) {
+            return MessageReqPacket.class;
+        } else if (command == Command.MESSAGE_RESPONSE) {
+            return MessageRespPacket.class;
         }
         // 返回 null 表示过滤
         return null;

@@ -16,12 +16,10 @@ public class LoginServerHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         ByteBuf loginBuf = (ByteBuf) msg;
-
+        // 如果下游还是要重新读取的话得mark，再重新设置
+        ((ByteBuf) msg).markReaderIndex();
         Packet decode = PacketCodeC.getInstance().decode(loginBuf);
-        if (decode == null) {
-            // 如果为空则返回下i个pipeline handler
-            ctx.fireChannelRead(msg);
-        }
+
         if (decode instanceof LoginRequestPacket) {
             LoginRequestPacket request = (LoginRequestPacket) decode;
             LoginResponsePacket response = new LoginResponsePacket();
@@ -38,6 +36,9 @@ public class LoginServerHandler extends ChannelInboundHandlerAdapter {
                 System.out.println("[" + new Date() + "] : 校验失败， 登陆账号确定好账号和密码");
             }
             ctx.channel().writeAndFlush(PacketCodeC.getInstance().encode(ctx.alloc().buffer(), response));
+        }else {
+            ((ByteBuf) msg).resetReaderIndex();
+            ctx.fireChannelRead(msg);
         }
 
     }
