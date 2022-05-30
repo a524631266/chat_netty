@@ -34,11 +34,11 @@ public class LoginClientHandler extends ChannelInboundHandlerAdapter {
         packet.setUserId(userId);
         packet.setUsername(userName);
 
-        ctx.alloc().buffer();
-        ctx.alloc().ioBuffer();
-        ctx.alloc().compositeBuffer();
-        ctx.alloc().directBuffer();
-        ctx.alloc().heapBuffer();
+//        ctx.alloc().buffer();
+//        ctx.alloc().ioBuffer();
+//        ctx.alloc().compositeBuffer();
+//        ctx.alloc().directBuffer();
+//        ctx.alloc().heapBuffer();
 
 
         ByteBuf buffer = PacketCodeC.getInstance().encode(ctx.alloc().buffer(),packet);

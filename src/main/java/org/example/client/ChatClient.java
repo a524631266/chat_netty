@@ -8,11 +8,11 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.util.AttributeKey;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
-import org.example.client.handler.LoginClientHandler;
-import org.example.client.handler.MessageClientHandler;
-import org.example.client.handler.SimpleLoginClientHandler;
+import org.example.client.handler.*;
 import org.example.codec.line.LineCommandShell;
 import org.example.common.ChatConfiguration;
+import org.example.server.handler.PacketDecoder;
+import org.example.server.handler.PacketEncoder;
 
 import java.util.concurrent.TimeUnit;
 
@@ -41,13 +41,27 @@ public class ChatClient {
 //                            }
 //                        });
 //                        ch.pipeline().addLast(new FirstClientHandler());
-                        ch.pipeline().addLast(new LoginClientHandler());
-                        ch.pipeline().addLast(new SimpleLoginClientHandler());
-                        ch.pipeline().addLast(new MessageClientHandler());
+                        // 方法1
+//                        simpleMethod(ch);
+                        // 方法2
+                        purityMethod(ch);
                     }
                 });
 
         retryConnect(chatBootstrap, 2);
+    }
+
+    private static void purityMethod(SocketChannel ch) {
+        ch.pipeline().addLast(new PacketDecoder());
+        ch.pipeline().addLast(new PacketEncoder());
+        ch.pipeline().addLast(new SimpleLoginResponseHandler());
+        ch.pipeline().addLast(new SimpleMessageResponseHandler());
+    }
+
+    private static void simpleMethod(SocketChannel ch) {
+        ch.pipeline().addLast(new LoginClientHandler());
+        ch.pipeline().addLast(new SimpleLoginClientHandler());
+        ch.pipeline().addLast(new MessageClientHandler());
     }
 
     private static void retryConnect(Bootstrap chatBootstrap, int retry) {
