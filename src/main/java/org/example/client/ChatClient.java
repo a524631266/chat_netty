@@ -5,6 +5,7 @@ import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.codec.FixedLengthFrameDecoder;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.util.AttributeKey;
 import io.netty.util.concurrent.Future;
@@ -74,6 +75,7 @@ public class ChatClient {
     }
 
     private static void splicingMethod(SocketChannel ch) {
+        ch.pipeline().addLast(new FixedLengthFrameDecoder(40));
         ch.pipeline().addLast(new LoginRequestSplicingHandler());
     }
 
