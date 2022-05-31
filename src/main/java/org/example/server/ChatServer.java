@@ -56,10 +56,10 @@ public class ChatServer {
 
 
                         // 方法二
-//                        purityMethod(ch);
+                        purityMethod(ch);
 
                         // 粘包演示
-                        splicingMethod(ch);
+//                        splicingMethod(ch);
 
 //                        ch.pipeline().addLast(new ClientConnectHandler());
 //                        ch.pipeline().addLast(new FirstServerHandler());
@@ -96,6 +96,7 @@ public class ChatServer {
     }
 
     private static void purityMethod(NioSocketChannel ch) {
+        ch.pipeline().addLast(new LifeCycleTestHandler());
         ch.pipeline().addLast(new LengthFieldBasedFrameDecoder(Integer.MAX_VALUE, 7, 4));
         ch.pipeline().addLast(new PacketDecoder());
         ch.pipeline().addLast(new PacketEncoder());

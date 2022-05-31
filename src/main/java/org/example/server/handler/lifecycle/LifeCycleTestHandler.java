@@ -1,5 +1,6 @@
 package org.example.server.handler.lifecycle;
 
+import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import lombok.extern.log4j.Log4j2;
@@ -28,6 +29,10 @@ public class LifeCycleTestHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+        if(msg instanceof ByteBuf) {
+            ByteBuf buffer = (ByteBuf) msg;
+            ClientConnectMonitor.updateCount(ctx, Long.valueOf(buffer.readableBytes()));
+        }
         log.info("channel 有数据可读 channelRead()");
         super.channelRead(ctx, msg);
     }
