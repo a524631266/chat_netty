@@ -5,6 +5,7 @@ import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.util.AttributeKey;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
@@ -59,6 +60,7 @@ public class ChatClient {
     }
 
     private static void purityMethod(SocketChannel ch) {
+        ch.pipeline().addLast(new LengthFieldBasedFrameDecoder(Integer.MAX_VALUE, 7, 4));
         ch.pipeline().addLast(new PacketDecoder());
         ch.pipeline().addLast(new PacketEncoder());
         ch.pipeline().addLast(new SimpleLoginResponseHandler());
