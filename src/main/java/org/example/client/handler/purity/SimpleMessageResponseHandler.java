@@ -1,4 +1,4 @@
-package org.example.client.handler;
+package org.example.client.handler.purity;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
