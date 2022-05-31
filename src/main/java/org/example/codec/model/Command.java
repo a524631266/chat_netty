@@ -6,5 +6,9 @@ public interface Command {
 
     Byte MESSAGE_REQUEST = 3; // message请求指令
     Byte MESSAGE_RESPONSE = 4; // message响应指令
+
+    Byte POINT_TO_POINT_MESSAGE_REQUEST = 5; // 点对点消息发送请求
+    Byte POINT_TO_POINT_MESSAGE_RESPONSE = 6; // 点对点消息发送响应
+
 }
 

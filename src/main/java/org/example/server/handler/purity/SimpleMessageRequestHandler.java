@@ -14,7 +14,6 @@ public class SimpleMessageRequestHandler extends SimpleChannelInboundHandler<Mes
 
         MessageRespPacket packet = new MessageRespPacket();
         packet.setMessage("服务器接收到: " + msg.getMessage());
-
         log.info("响应请求: " + packet);
         ctx.channel().writeAndFlush(packet);
     }

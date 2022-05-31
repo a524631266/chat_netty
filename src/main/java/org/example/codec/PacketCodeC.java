@@ -5,6 +5,8 @@ import io.netty.buffer.ByteBufAllocator;
 import org.example.codec.line.model.MessageReqPacket;
 import org.example.codec.line.model.MessageRespPacket;
 import org.example.codec.model.*;
+import org.example.codec.model.communicate.PointToPointCommunicateRequestPacket;
+import org.example.codec.model.communicate.PointToPointCommunicateResponsePacket;
 
 public class PacketCodeC {
 
@@ -94,6 +96,8 @@ public class PacketCodeC {
 
     /**
      * 通过命令方式返回，不用 if else 判断
+     *
+     * 用户可以指定命令模式来请
      * @param command
      * @return
      */
@@ -106,6 +110,10 @@ public class PacketCodeC {
             return MessageReqPacket.class;
         } else if (command == Command.MESSAGE_RESPONSE) {
             return MessageRespPacket.class;
+        } else if (command == Command.POINT_TO_POINT_MESSAGE_RESPONSE) {
+            return PointToPointCommunicateResponsePacket.class;
+        } else if (command == Command.POINT_TO_POINT_MESSAGE_REQUEST) {
+            return PointToPointCommunicateRequestPacket.class;
         }
         // 返回 null 表示过滤
         return null;
