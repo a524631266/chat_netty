@@ -1,11 +1,14 @@
 package org.example.server;
 
 import io.netty.bootstrap.ServerBootstrap;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.ByteBufAllocator;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.codec.DelimiterBasedFrameDecoder;
 import io.netty.handler.codec.FixedLengthFrameDecoder;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.util.AttributeKey;
@@ -21,6 +24,8 @@ import org.example.server.handler.purity.SimpleMessageRequestHandler;
 import org.example.server.handler.simple.LoginServerHandler;
 import org.example.server.handler.simple.MessageServerHandler;
 import org.example.server.handler.splicing.LoginResponseSplicingHandler;
+
+import java.nio.charset.StandardCharsets;
 
 
 /**
@@ -70,7 +75,13 @@ public class ChatServer {
     }
 
     private static void splicingMethod(NioSocketChannel ch) {
-        ch.pipeline().addLast(new FixedLengthFrameDecoder(40));
+//        ch.pipeline().addLast(new FixedLengthFrameDecoder(40));
+
+
+        ByteBuf byteBuf = ByteBufAllocator.DEFAULT.buffer(0, 1);
+        byteBuf.writeBytes("\n".getBytes(StandardCharsets.UTF_8));
+        ch.pipeline().addLast(new DelimiterBasedFrameDecoder(Integer.MAX_VALUE,byteBuf));
+
         ch.pipeline().addLast(new LoginResponseSplicingHandler());
     }
 

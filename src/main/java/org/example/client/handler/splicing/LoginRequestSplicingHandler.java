@@ -25,8 +25,7 @@ public class LoginRequestSplicingHandler extends ChannelInboundHandlerAdapter {
     }
 
     private ByteBuf getByteBuf(ChannelHandlerContext ctx) {
-        byte[] bytes = "你好，我是来未来的世界的zero".getBytes(Charset.forName("utf-8"));
-        System.out.println(bytes.length);
+        byte[] bytes = "你好，我是来未来的世界的zero\n".getBytes(Charset.forName("utf-8"));
         ByteBuf buffer = ctx.alloc().buffer();
         buffer.writeBytes(bytes);
         return buffer;
