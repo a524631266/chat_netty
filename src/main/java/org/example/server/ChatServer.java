@@ -11,7 +11,12 @@ import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
 import org.example.common.ChatConfiguration;
 
-import org.example.server.handler.*;
+import org.example.server.handler.purity.PacketDecoder;
+import org.example.server.handler.purity.PacketEncoder;
+import org.example.server.handler.purity.SimpleLoginRequestHandler;
+import org.example.server.handler.purity.SimpleMessageRequestHandler;
+import org.example.server.handler.simple.LoginServerHandler;
+import org.example.server.handler.simple.MessageServerHandler;
 
 
 /**

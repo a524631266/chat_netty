@@ -15,8 +15,8 @@ import org.example.client.handler.simple.LoginClientHandler;
 import org.example.client.handler.simple.MessageClientHandler;
 import org.example.codec.line.LineCommandShell;
 import org.example.common.ChatConfiguration;
-import org.example.server.handler.PacketDecoder;
-import org.example.server.handler.PacketEncoder;
+import org.example.server.handler.purity.PacketDecoder;
+import org.example.server.handler.purity.PacketEncoder;
 
 import java.util.concurrent.TimeUnit;
 

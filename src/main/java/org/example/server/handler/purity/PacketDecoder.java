@@ -1,4 +1,4 @@
-package org.example.server.handler;
+package org.example.server.handler.purity;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
