@@ -29,6 +29,7 @@ public class PointToPointCommunicateRequestHandler extends SimpleChannelInboundH
             CommunicateContext sessionContext = SessionManage.getSessionContext(ctx.channel());
             response.setFromUserId(sessionContext.getSession().getUserId());
             response.setFromUserName(sessionContext.getSession().getUserName());
+            response.setMessage(packet.getMessage());
             if(!Objects.equal(context.getChannel(), null)){
                 Channel toUserChannel = context.getChannel();
                 toUserChannel.writeAndFlush(response);

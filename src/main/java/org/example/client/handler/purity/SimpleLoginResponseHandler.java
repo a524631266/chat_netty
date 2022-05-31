@@ -18,15 +18,15 @@ public class SimpleLoginResponseHandler extends SimpleChannelInboundHandler<Logi
     public static String userName = "zll";
     public static Integer userId = UUID.randomUUID().hashCode();
 
-    @Override
-    public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        LoginRequestPacket packet = new LoginRequestPacket();
-        packet.setPassword(password);
-        packet.setUserId(userId);
-        packet.setUsername(userName);
-        ByteBuf buffer = PacketCodeC.getInstance().encode(ctx.alloc().ioBuffer(),packet);
-        ctx.channel().writeAndFlush(buffer);
-    }
+//    @Override
+//    public void channelActive(ChannelHandlerContext ctx) throws Exception {
+//        LoginRequestPacket packet = new LoginRequestPacket();
+//        packet.setPassword(password);
+//        packet.setUserId(userId);
+//        packet.setUsername(userName);
+//        ByteBuf buffer = PacketCodeC.getInstance().encode(ctx.alloc().ioBuffer(),packet);
+//        ctx.channel().writeAndFlush(buffer);
+//    }
 
     /**
      * 有且只有一次。在验证阶段过程中

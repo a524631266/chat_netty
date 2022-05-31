@@ -15,7 +15,8 @@ public class SimpleLoginRequestHandler extends SimpleChannelInboundHandler<Login
     protected void channelRead0(ChannelHandlerContext ctx, LoginRequestPacket msg) throws Exception {
         LoginRequestPacket request = (LoginRequestPacket) msg;
         LoginResponsePacket response = new LoginResponsePacket();
-        response.setUserId(request.getUserId());
+        Integer userId = request.getUserId() == null ? randomUid() : request.getUserId();
+        response.setUserId(userId);
         response.setPassword(request.getPassword());
         response.setUsername(request.getUsername());
         response.setSuccess(true);
@@ -25,12 +26,16 @@ public class SimpleLoginRequestHandler extends SimpleChannelInboundHandler<Login
         // 绑定当前的session
         SessionManage.bindSession(ctx.channel(),
                 Session.builder()
-                        .userId(String.valueOf(request.getUserId()))
+                        .userId(String.valueOf(userId))
                         .userName(request.getUsername())
                         .build()
                 );
 
         ctx.channel().writeAndFlush(response);
+    }
+
+    private Integer randomUid() {
+        return SessionManage.randomUid();
     }
 
     @Override

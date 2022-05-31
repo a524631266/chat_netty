@@ -10,6 +10,7 @@ import org.example.server.session.model.Session;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 @Log4j2
 public class SessionManage {
@@ -55,5 +56,14 @@ public class SessionManage {
 
     public static CommunicateContext queryToUserId(String toUserId) {
         return relationMap.get(toUserId);
+    }
+
+    public static Integer randomUid() {
+        int maxTray = 5;
+        int i = UUID.randomUUID().hashCode();
+        while (maxTray >= 0 && relationMap.containsKey(String.valueOf(i))) {
+            maxTray -= 1;
+        }
+        return i;
     }
 }

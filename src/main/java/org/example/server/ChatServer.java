@@ -19,10 +19,7 @@ import org.example.common.ChatConfiguration;
 
 import org.example.monitor.ClientConnectMonitor;
 import org.example.server.handler.lifecycle.LifeCycleTestHandler;
-import org.example.server.handler.purity.PacketDecoder;
-import org.example.server.handler.purity.PacketEncoder;
-import org.example.server.handler.purity.SimpleLoginRequestHandler;
-import org.example.server.handler.purity.SimpleMessageRequestHandler;
+import org.example.server.handler.purity.*;
 import org.example.server.handler.simple.LoginServerHandler;
 import org.example.server.handler.simple.MessageServerHandler;
 import org.example.server.handler.splicing.LoginResponseSplicingHandler;
@@ -102,6 +99,7 @@ public class ChatServer {
         ch.pipeline().addLast(new PacketEncoder());
         ch.pipeline().addLast(new SimpleLoginRequestHandler());
         ch.pipeline().addLast(new SimpleMessageRequestHandler());
+        ch.pipeline().addLast(new PointToPointCommunicateRequestHandler());
     }
 
     /**

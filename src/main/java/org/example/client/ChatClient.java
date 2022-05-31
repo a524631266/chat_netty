@@ -14,6 +14,7 @@ import io.netty.handler.codec.LineBasedFrameDecoder;
 import io.netty.util.AttributeKey;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
+import org.example.client.handler.purity.PointToPointCommunicateResponseHandler;
 import org.example.client.handler.purity.SimpleLoginClientHandler;
 import org.example.client.handler.purity.SimpleLoginResponseHandler;
 import org.example.client.handler.purity.SimpleMessageResponseHandler;
@@ -21,6 +22,7 @@ import org.example.client.handler.security.AuthHandler;
 import org.example.client.handler.simple.LoginClientHandler;
 import org.example.client.handler.simple.MessageClientHandler;
 import org.example.client.handler.splicing.LoginRequestSplicingHandler;
+import org.example.codec.line.CommunicateCommandShell;
 import org.example.codec.line.LineCommandShell;
 import org.example.common.ChatConfiguration;
 import org.example.server.handler.purity.PacketDecoder;
@@ -72,6 +74,7 @@ public class ChatClient {
         ch.pipeline().addLast(new SimpleLoginResponseHandler());
         ch.pipeline().addLast(new AuthHandler());
         ch.pipeline().addLast(new SimpleMessageResponseHandler());
+        ch.pipeline().addLast(new PointToPointCommunicateResponseHandler());
     }
 
     private static void simpleMethod(SocketChannel ch) {
@@ -93,7 +96,8 @@ public class ChatClient {
                         if (future.isSuccess()) {
                             System.out.println("连接成功+");
                             Channel channel = ((ChannelFuture) future).channel();
-                            LineCommandShell.startThread(channel);
+//                            LineCommandShell.startThread(channel);
+                            CommunicateCommandShell.startThread(channel);
                         }else if (retry == 0) {
                             System.out.println("stop ");
                         } else {
