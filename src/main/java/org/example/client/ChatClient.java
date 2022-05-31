@@ -17,6 +17,7 @@ import io.netty.util.concurrent.GenericFutureListener;
 import org.example.client.handler.purity.SimpleLoginClientHandler;
 import org.example.client.handler.purity.SimpleLoginResponseHandler;
 import org.example.client.handler.purity.SimpleMessageResponseHandler;
+import org.example.client.handler.security.AuthHandler;
 import org.example.client.handler.simple.LoginClientHandler;
 import org.example.client.handler.simple.MessageClientHandler;
 import org.example.client.handler.splicing.LoginRequestSplicingHandler;
@@ -69,6 +70,7 @@ public class ChatClient {
         ch.pipeline().addLast(new PacketDecoder());
         ch.pipeline().addLast(new PacketEncoder());
         ch.pipeline().addLast(new SimpleLoginResponseHandler());
+        ch.pipeline().addLast(new AuthHandler());
         ch.pipeline().addLast(new SimpleMessageResponseHandler());
     }
 

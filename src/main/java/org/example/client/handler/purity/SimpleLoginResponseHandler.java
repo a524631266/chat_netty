@@ -28,6 +28,12 @@ public class SimpleLoginResponseHandler extends SimpleChannelInboundHandler<Logi
         ctx.channel().writeAndFlush(buffer);
     }
 
+    /**
+     * 有且只有一次。在验证阶段过程中
+     * @param ctx
+     * @param msg
+     * @throws Exception
+     */
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, LoginResponsePacket msg) throws Exception {
         log.info(msg);
