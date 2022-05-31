@@ -2,11 +2,13 @@ package org.example.client.command;
 
 import io.netty.channel.Channel;
 import org.example.codec.model.communicate.PointToPointCommunicateRequestPacket;
+import org.example.common.TimeUtils;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class ConsoleCommandManager implements ConsoleCommand {
 
@@ -29,7 +31,7 @@ public class ConsoleCommandManager implements ConsoleCommand {
         if(consoleCommand != null) {
             consoleCommand.exec(scanner, channel);
         } else {
-            System.err.println("无法识别 [" + command + "] 指令，请重新输入");
+            System.out.println("【warning】无法识别 [" + command + "] 指令，请重新输入");
         }
     }
 

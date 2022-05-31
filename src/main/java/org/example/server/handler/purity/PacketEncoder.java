@@ -14,7 +14,7 @@ import org.example.codec.model.Packet;
 public class PacketEncoder extends MessageToByteEncoder<Packet> {
     @Override
     protected void encode(ChannelHandlerContext ctx, Packet msg, ByteBuf out) throws Exception {
-        log.info(msg);
+//        log.info(msg);
         PacketCodeC.getInstance().encode(out, msg);
     }
 }

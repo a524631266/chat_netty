@@ -24,9 +24,9 @@ public class AuthHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void handlerRemoved(ChannelHandlerContext ctx) throws Exception {
         if(ChatConfiguration.hasLogin(ctx.channel())){
-            log.info("当前已经验证过了，后续无需再认证");
+            log.info("删除当前的handler ，表示已经验证过了，后续无需再认证");
         } else  {
-            log.info("无登陆验证");
+            log.info("无登陆验证，删除 handler");
         }
         super.handlerRemoved(ctx);
     }
