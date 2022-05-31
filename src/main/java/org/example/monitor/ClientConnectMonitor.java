@@ -47,6 +47,10 @@ public class ClientConnectMonitor {
         }
     }
 
+    public static void delete(ChannelHandlerContext cx) {
+        flowMap.remove(cx);
+    }
+
     public static Cache<Long, Long> initCache() {
         Cache<Long, Long> cache = CacheBuilder.newBuilder()
                 // 最大3个

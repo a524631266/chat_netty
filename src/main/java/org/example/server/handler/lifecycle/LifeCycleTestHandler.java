@@ -59,6 +59,7 @@ public class LifeCycleTestHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void handlerRemoved(ChannelHandlerContext ctx) throws Exception {
         log.info("取消处理器，被移除 handlerRemoved()");
+        ClientConnectMonitor.delete(ctx);
         super.handlerRemoved(ctx);
     }
 }
