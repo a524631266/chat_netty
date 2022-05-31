@@ -55,9 +55,9 @@ public class ChatClient {
                         // 方法1
 //                        simpleMethod(ch);
                         // 方法2
-//                        purityMethod(ch);
+                        purityMethod(ch);
                         // 粘包演示
-                        splicingMethod(ch);
+//                        splicingMethod(ch);
                     }
                 });
 

@@ -17,6 +17,8 @@ import io.netty.util.concurrent.GenericFutureListener;
 import org.example.client.handler.splicing.LoginRequestSplicingHandler;
 import org.example.common.ChatConfiguration;
 
+import org.example.monitor.ClientConnectMonitor;
+import org.example.server.handler.lifecycle.LifeCycleTestHandler;
 import org.example.server.handler.purity.PacketDecoder;
 import org.example.server.handler.purity.PacketEncoder;
 import org.example.server.handler.purity.SimpleLoginRequestHandler;
@@ -82,7 +84,7 @@ public class ChatServer {
 //        ByteBuf byteBuf = ByteBufAllocator.DEFAULT.buffer(0, 1);
 //        byteBuf.writeBytes("\n".getBytes(StandardCharsets.UTF_8));
 //        ch.pipeline().addLast(new DelimiterBasedFrameDecoder(Integer.MAX_VALUE,byteBuf));
-
+        ch.pipeline().addLast(new LifeCycleTestHandler());
         ch.pipeline().addLast(new MyselfSpliter());
         ch.pipeline().addLast(new LoginResponseSplicingHandler());
     }
@@ -112,6 +114,8 @@ public class ChatServer {
                     public void operationComplete(Future<? super Void> future) throws Exception {
                         if (future.isSuccess()) {
                             System.out.println("启动成功:" + ChatConfiguration.ChatServerPort);
+                            // 启动一个自定义监控链接
+                            new ClientConnectMonitor().start();
                         } else {
                             // 不用 + 1
                             autoIncBind(chatBootstrap);
