@@ -24,6 +24,7 @@ import org.example.server.handler.purity.SimpleMessageRequestHandler;
 import org.example.server.handler.simple.LoginServerHandler;
 import org.example.server.handler.simple.MessageServerHandler;
 import org.example.server.handler.splicing.LoginResponseSplicingHandler;
+import org.example.server.handler.splicing.MyselfSpliter;
 
 import java.nio.charset.StandardCharsets;
 
@@ -78,10 +79,11 @@ public class ChatServer {
 //        ch.pipeline().addLast(new FixedLengthFrameDecoder(40));
 
 
-        ByteBuf byteBuf = ByteBufAllocator.DEFAULT.buffer(0, 1);
-        byteBuf.writeBytes("\n".getBytes(StandardCharsets.UTF_8));
-        ch.pipeline().addLast(new DelimiterBasedFrameDecoder(Integer.MAX_VALUE,byteBuf));
+//        ByteBuf byteBuf = ByteBufAllocator.DEFAULT.buffer(0, 1);
+//        byteBuf.writeBytes("\n".getBytes(StandardCharsets.UTF_8));
+//        ch.pipeline().addLast(new DelimiterBasedFrameDecoder(Integer.MAX_VALUE,byteBuf));
 
+        ch.pipeline().addLast(new MyselfSpliter());
         ch.pipeline().addLast(new LoginResponseSplicingHandler());
     }
 
