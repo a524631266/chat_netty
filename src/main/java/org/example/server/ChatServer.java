@@ -114,7 +114,7 @@ public class ChatServer {
                         if (future.isSuccess()) {
                             System.out.println("启动成功:" + ChatConfiguration.ChatServerPort);
                             // 启动一个自定义监控链接
-                            new ClientConnectMonitor().start();
+//                            new ClientConnectMonitor().start();
                         } else {
                             // 不用 + 1
                             autoIncBind(chatBootstrap);
