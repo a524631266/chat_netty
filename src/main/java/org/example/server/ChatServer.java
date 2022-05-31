@@ -9,6 +9,7 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.util.AttributeKey;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
+import org.example.client.handler.splicing.LoginRequestSplicingHandler;
 import org.example.common.ChatConfiguration;
 
 import org.example.server.handler.purity.PacketDecoder;
@@ -17,6 +18,7 @@ import org.example.server.handler.purity.SimpleLoginRequestHandler;
 import org.example.server.handler.purity.SimpleMessageRequestHandler;
 import org.example.server.handler.simple.LoginServerHandler;
 import org.example.server.handler.simple.MessageServerHandler;
+import org.example.server.handler.splicing.LoginResponseSplicingHandler;
 
 
 /**
@@ -44,8 +46,10 @@ public class ChatServer {
 
 
                         // 方法二
-                        purityMethod(ch);
+//                        purityMethod(ch);
 
+                        // 粘包演示
+                        splicingMethod(ch);
 
 //                        ch.pipeline().addLast(new ClientConnectHandler());
 //                        ch.pipeline().addLast(new FirstServerHandler());
@@ -61,6 +65,10 @@ public class ChatServer {
                     }
                 });
         autoIncBind(chatBootstrap);
+    }
+
+    private static void splicingMethod(NioSocketChannel ch) {
+        ch.pipeline().addLast(new LoginResponseSplicingHandler());
     }
 
     private static void simpleMethod(NioSocketChannel ch) {

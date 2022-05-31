@@ -13,6 +13,7 @@ import org.example.client.handler.purity.SimpleLoginResponseHandler;
 import org.example.client.handler.purity.SimpleMessageResponseHandler;
 import org.example.client.handler.simple.LoginClientHandler;
 import org.example.client.handler.simple.MessageClientHandler;
+import org.example.client.handler.splicing.LoginRequestSplicingHandler;
 import org.example.codec.line.LineCommandShell;
 import org.example.common.ChatConfiguration;
 import org.example.server.handler.purity.PacketDecoder;
@@ -48,7 +49,9 @@ public class ChatClient {
                         // 方法1
 //                        simpleMethod(ch);
                         // 方法2
-                        purityMethod(ch);
+//                        purityMethod(ch);
+                        // 粘包演示
+                        splicingMethod(ch);
                     }
                 });
 
@@ -66,6 +69,10 @@ public class ChatClient {
         ch.pipeline().addLast(new LoginClientHandler());
         ch.pipeline().addLast(new SimpleLoginClientHandler());
         ch.pipeline().addLast(new MessageClientHandler());
+    }
+
+    private static void splicingMethod(SocketChannel ch) {
+        ch.pipeline().addLast(new LoginRequestSplicingHandler());
     }
 
     private static void retryConnect(Bootstrap chatBootstrap, int retry) {
