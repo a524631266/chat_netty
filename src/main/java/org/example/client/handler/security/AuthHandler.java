@@ -3,7 +3,7 @@ package org.example.client.handler.security;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import lombok.extern.log4j.Log4j2;
-import org.example.common.ChatConfiguration;
+import org.example.config.ChatConfiguration;
 
 @Log4j2
 public class AuthHandler extends ChannelInboundHandlerAdapter {

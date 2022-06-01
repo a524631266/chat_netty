@@ -1,14 +1,10 @@
 package org.example.client.handler.purity;
 
-import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import lombok.extern.log4j.Log4j2;
-import org.example.codec.PacketCodeC;
-import org.example.codec.line.model.MessageRespPacket;
-import org.example.codec.model.LoginRequestPacket;
 import org.example.codec.model.LoginResponsePacket;
-import org.example.common.ChatConfiguration;
+import org.example.config.ChatConfiguration;
 
 import java.util.UUID;
 

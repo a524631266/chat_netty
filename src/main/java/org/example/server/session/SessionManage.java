@@ -3,7 +3,7 @@ package org.example.server.session;
 import io.netty.channel.Channel;
 import lombok.extern.log4j.Log4j2;
 
-import org.example.common.ChatConfiguration;
+import org.example.config.ChatConfiguration;
 import org.example.server.session.model.CommunicateContext;
 import org.example.server.session.model.Session;
 

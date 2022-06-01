@@ -3,12 +3,11 @@ package org.example.server.handler.simple;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import io.netty.util.AttributeKey;
 import org.example.codec.PacketCodeC;
 import org.example.codec.model.LoginRequestPacket;
 import org.example.codec.model.LoginResponsePacket;
 import org.example.codec.model.Packet;
-import org.example.common.ChatConfiguration;
+import org.example.config.ChatConfiguration;
 
 import java.util.Date;
 

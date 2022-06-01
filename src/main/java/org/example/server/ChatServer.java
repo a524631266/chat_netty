@@ -1,23 +1,21 @@
 package org.example.server;
 
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.ByteBufAllocator;
+
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import io.netty.handler.codec.DelimiterBasedFrameDecoder;
-import io.netty.handler.codec.FixedLengthFrameDecoder;
+
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.util.AttributeKey;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
-import org.example.client.handler.splicing.LoginRequestSplicingHandler;
-import org.example.common.ChatConfiguration;
 
-import org.example.monitor.ClientConnectMonitor;
+import org.example.config.ChatConfiguration;
+
+
 import org.example.server.handler.lifecycle.LifeCycleTestHandler;
 import org.example.server.handler.purity.*;
 import org.example.server.handler.simple.LoginServerHandler;
@@ -25,14 +23,12 @@ import org.example.server.handler.simple.MessageServerHandler;
 import org.example.server.handler.splicing.LoginResponseSplicingHandler;
 import org.example.server.handler.splicing.MyselfSpliter;
 
-import java.nio.charset.StandardCharsets;
-
 
 /**
  *
  */
 public class ChatServer {
-    public static void main(String[] args) {
+    public void start(ChatConfiguration config) {
         ServerBootstrap chatBootstrap = new ServerBootstrap();
 
         NioEventLoopGroup acceptor = new NioEventLoopGroup(1);
@@ -71,7 +67,7 @@ public class ChatServer {
                         //
                     }
                 });
-        autoIncBind(chatBootstrap);
+        autoIncBind(chatBootstrap, config);
     }
 
     private static void splicingMethod(NioSocketChannel ch) {
@@ -104,20 +100,23 @@ public class ChatServer {
 
     /**
      * 自动递增聊天
+     *
      * @param chatBootstrap
      */
-    private static void autoIncBind(ServerBootstrap chatBootstrap) {
-        chatBootstrap.bind(ChatConfiguration.ChatServerIp, ChatConfiguration.ChatServerPort)
+    private static void autoIncBind(ServerBootstrap chatBootstrap, ChatConfiguration config) {
+        String ip = config.getRawValueFromOption(ChatConfiguration.serverIp);// ip 配置
+        Integer port = config.getRawValueFromOption(ChatConfiguration.serverPort); // port 配置
+        chatBootstrap.bind(ip, port) // port 配置
                 .addListener(new GenericFutureListener<Future<? super Void>>() {
                     @Override
                     public void operationComplete(Future<? super Void> future) throws Exception {
                         if (future.isSuccess()) {
-                            System.out.println("启动成功:" + ChatConfiguration.ChatServerPort);
+                            System.out.println("启动成功:" + ip + ":" + port );
                             // 启动一个自定义监控链接
 //                            new ClientConnectMonitor().start();
                         } else {
                             // 不用 + 1
-                            autoIncBind(chatBootstrap);
+                            autoIncBind(chatBootstrap, config);
                         }
                     }
                 });

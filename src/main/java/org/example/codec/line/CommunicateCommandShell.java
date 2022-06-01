@@ -1,15 +1,11 @@
 package org.example.codec.line;
 
-import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
 import org.example.client.command.CommandEnum;
 import org.example.client.command.ConsoleCommand;
 import org.example.client.command.ConsoleCommandManager;
-import org.example.codec.PacketCodeC;
-import org.example.codec.line.model.MessageReqPacket;
 import org.example.codec.model.LoginRequestPacket;
-import org.example.codec.model.communicate.PointToPointCommunicateRequestPacket;
-import org.example.common.ChatConfiguration;
+import org.example.config.ChatConfiguration;
 
 import java.util.Map;
 import java.util.Scanner;

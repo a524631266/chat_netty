@@ -1,16 +1,12 @@
 package org.example.client;
 
 import io.netty.bootstrap.Bootstrap;
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.ByteBufAllocator;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import io.netty.handler.codec.DelimiterBasedFrameDecoder;
 import io.netty.handler.codec.FixedLengthFrameDecoder;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
-import io.netty.handler.codec.LineBasedFrameDecoder;
 import io.netty.util.AttributeKey;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
@@ -23,8 +19,7 @@ import org.example.client.handler.simple.LoginClientHandler;
 import org.example.client.handler.simple.MessageClientHandler;
 import org.example.client.handler.splicing.LoginRequestSplicingHandler;
 import org.example.codec.line.CommunicateCommandShell;
-import org.example.codec.line.LineCommandShell;
-import org.example.common.ChatConfiguration;
+import org.example.config.ChatConfiguration;
 import org.example.server.handler.purity.PacketDecoder;
 import org.example.server.handler.purity.PacketEncoder;
 
@@ -33,7 +28,7 @@ import java.util.concurrent.TimeUnit;
 public class ChatClient {
     public static int MAX_RETRY = 5;
 
-    public static void main(String[] args) {
+    public void start(ChatConfiguration config) {
         Bootstrap chatBootstrap = new Bootstrap();
         NioEventLoopGroup workers = new NioEventLoopGroup();
 
@@ -64,7 +59,7 @@ public class ChatClient {
                     }
                 });
 
-        retryConnect(chatBootstrap, 2);
+        retryConnect(chatBootstrap, config, 2);
     }
 
     private static void purityMethod(SocketChannel ch) {
@@ -88,8 +83,10 @@ public class ChatClient {
         ch.pipeline().addLast(new LoginRequestSplicingHandler());
     }
 
-    private static void retryConnect(Bootstrap chatBootstrap, int retry) {
-        chatBootstrap.connect(ChatConfiguration.ChatServerIp, ChatConfiguration.ChatServerPort)
+    private static void retryConnect(Bootstrap chatBootstrap, ChatConfiguration config, int retry) {
+        chatBootstrap.connect(
+                        config.getRawValueFromOption(ChatConfiguration.serverIp), // ip 配置
+                        config.getRawValueFromOption(ChatConfiguration.serverPort)) // port 配置
                 .addListener(new GenericFutureListener<Future<? super Void>>() {
                     @Override
                     public void operationComplete(Future<? super Void> future) throws Exception {
@@ -98,7 +95,7 @@ public class ChatClient {
                             Channel channel = ((ChannelFuture) future).channel();
 //                            LineCommandShell.startThread(channel);
                             CommunicateCommandShell.startThread(channel);
-                        }else if (retry == 0) {
+                        } else if (retry == 0) {
                             System.out.println("stop ");
                         } else {
                             // 指数退避法则
@@ -106,7 +103,7 @@ public class ChatClient {
                             int sleepSec = 1 << order;
                             System.out.println("sleepSec: " + sleepSec);
                             // 优化
-                            chatBootstrap.config().group().schedule(() -> retryConnect(chatBootstrap, retry - 1), sleepSec, TimeUnit.SECONDS);
+                            chatBootstrap.config().group().schedule(() -> retryConnect(chatBootstrap,config, retry - 1), sleepSec, TimeUnit.SECONDS);
                             System.out.println("失败");
                         }
                     }
