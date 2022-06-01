@@ -68,6 +68,7 @@ public class ChatClient {
         ch.pipeline().addLast(new SimpleMessageResponseHandler());
         ch.pipeline().addLast(new PointToPointCommunicateResponseHandler());
         ch.pipeline().addLast(new GlobalUserInfoResponseHandler());
+        ch.pipeline().addLast(new CreateGroupResponseHandler());
     }
 
     private static void simpleMethod(SocketChannel ch) {
