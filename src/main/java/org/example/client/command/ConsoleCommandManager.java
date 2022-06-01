@@ -17,6 +17,7 @@ public class ConsoleCommandManager implements ConsoleCommand {
         consoleCommandMap.put(CommandEnum.SEND_TO_USER, new SendToUserCommand());
         consoleCommandMap.put(CommandEnum.LOGOUT, new LogoutConsoleCommand());
         consoleCommandMap.put(CommandEnum.GET_USER, new GlobalUserInfoCommand());
+        consoleCommandMap.put(CommandEnum.CREATE_GROUP, new CreateGroupCommand());
     }
     private ConsoleCommand getConsoleCommand(String command) {
        return consoleCommandMap.get(CommandEnum.codeOf(command));

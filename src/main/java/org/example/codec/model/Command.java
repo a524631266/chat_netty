@@ -12,5 +12,8 @@ public interface Command {
 
     Byte GLOBAL_USER_INFO_MESSAGE_REQUEST = 7; // 全局用户信息  请求指令
     Byte GLOBAL_USER_INFO_MESSAGE_RESPONSE = 8; // 全局用户信息 返回包
+
+    Byte CREATE_GROUP_REQUEST = 9; // 全局用户信息  请求指令
+    Byte CREATE_GROUP_RESPONSE = 10; // 全局用户信息 返回包
 }
 
