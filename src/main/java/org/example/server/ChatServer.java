@@ -95,6 +95,8 @@ public class ChatServer {
         ch.pipeline().addLast(new SimpleMessageRequestHandler());
         ch.pipeline().addLast(new PointToPointCommunicateRequestHandler());
         ch.pipeline().addLast(new GlobalUserInfosRequestHandler());
+        ch.pipeline().addLast(new CreateGroupRequestHandler());
+
     }
 
     /**

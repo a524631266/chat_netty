@@ -5,6 +5,8 @@ import io.netty.buffer.ByteBufAllocator;
 import org.example.codec.line.model.MessageReqPacket;
 import org.example.codec.line.model.MessageRespPacket;
 import org.example.codec.model.*;
+import org.example.codec.model.creategroup.CreateGroupRequestPacket;
+import org.example.codec.model.creategroup.CreateGroupResponsePacket;
 import org.example.codec.model.getuserinfos.GlobalUserInfoRequestPacket;
 import org.example.codec.model.getuserinfos.GlobalUserInfoResponsePacket;
 import org.example.codec.model.sendToUser.PointToPointCommunicateRequestPacket;
@@ -119,6 +121,10 @@ public class PacketCodeC {
             return GlobalUserInfoResponsePacket.class;
         } else if (command == Command.GLOBAL_USER_INFO_MESSAGE_REQUEST) {
             return GlobalUserInfoRequestPacket.class;
+        }else if (command == Command.CREATE_GROUP_RESPONSE) {
+            return CreateGroupResponsePacket.class;
+        } else if (command == Command.CREATE_GROUP_REQUEST) {
+            return CreateGroupRequestPacket.class;
         }
         throw new RuntimeException("需要设置命令转换逻辑");
     }

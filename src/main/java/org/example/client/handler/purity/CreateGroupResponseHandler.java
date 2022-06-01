@@ -18,7 +18,7 @@ public class CreateGroupResponseHandler extends SimpleChannelInboundHandler<Crea
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, CreateGroupResponsePacket msg) throws Exception {
         if (msg.getSuccess()) {
-            System.out.println("创建成功 ");
+            System.out.println("创建成功 , 组号: [" + msg.getGroupId() + "], 用户信息： [" + Joiner.on(":").join(msg.getUserNames()).toLowerCase(Locale.ROOT) + "]");
         } else {
             System.out.println("创建失败, 原因是: " + msg.getReason());
         }
