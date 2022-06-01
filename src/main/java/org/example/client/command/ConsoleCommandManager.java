@@ -1,11 +1,13 @@
 package org.example.client.command;
 
 import io.netty.channel.Channel;
+import org.example.common.TimeUtils;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class ConsoleCommandManager implements ConsoleCommand {
 
@@ -14,6 +16,7 @@ public class ConsoleCommandManager implements ConsoleCommand {
     public ConsoleCommandManager() {
         consoleCommandMap.put(CommandEnum.SEND_TO_USER, new SendToUserCommand());
         consoleCommandMap.put(CommandEnum.LOGOUT, new LogoutConsoleCommand());
+        consoleCommandMap.put(CommandEnum.GET_USER, new GlobalUserInfoCommand());
     }
     private ConsoleCommand getConsoleCommand(String command) {
        return consoleCommandMap.get(CommandEnum.codeOf(command));
@@ -27,6 +30,7 @@ public class ConsoleCommandManager implements ConsoleCommand {
 
         if(consoleCommand != null) {
             consoleCommand.exec(scanner, channel);
+            TimeUtils.sleep(1, TimeUnit.SECONDS);
         } else {
             System.out.println("【warning】无法识别 [" + command + "] 指令，请重新输入");
         }

@@ -43,11 +43,9 @@ public class ChatServer {
                 .childAttr(AttributeKey.newInstance("clientName"), "chatClient")
                 .childHandler(new ChannelInitializer<NioSocketChannel>() {
                     @Override
-                    protected void initChannel(NioSocketChannel ch) throws Exception {
+                    protected void initChannel(NioSocketChannel ch){
 //                        // 方法一
 //                        simpleMethod(ch);
-
-
                         // 方法二
                         purityMethod(ch);
 
@@ -96,28 +94,25 @@ public class ChatServer {
         ch.pipeline().addLast(new SimpleLoginRequestHandler());
         ch.pipeline().addLast(new SimpleMessageRequestHandler());
         ch.pipeline().addLast(new PointToPointCommunicateRequestHandler());
+        ch.pipeline().addLast(new GlobalUserInfosRequestHandler());
     }
 
     /**
      * 自动递增聊天
      *
-     * @param chatBootstrap
      */
     private static void autoIncBind(ServerBootstrap chatBootstrap, ChatConfiguration config) {
         String ip = config.getRawValueFromOption(ChatConfiguration.serverIp);// ip 配置
         Integer port = config.getRawValueFromOption(ChatConfiguration.serverPort); // port 配置
         chatBootstrap.bind(ip, port) // port 配置
-                .addListener(new GenericFutureListener<Future<? super Void>>() {
-                    @Override
-                    public void operationComplete(Future<? super Void> future) throws Exception {
-                        if (future.isSuccess()) {
-                            System.out.println("启动成功:" + ip + ":" + port );
-                            // 启动一个自定义监控链接
+                .addListener(future -> {
+                    if (future.isSuccess()) {
+                        System.out.println("启动成功:" + ip + ":" + port );
+                        // 启动一个自定义监控链接
 //                            new ClientConnectMonitor().start();
-                        } else {
-                            // 不用 + 1
-                            autoIncBind(chatBootstrap, config);
-                        }
+                    } else {
+                        // 不用 + 1
+                        autoIncBind(chatBootstrap, config);
                     }
                 });
     }

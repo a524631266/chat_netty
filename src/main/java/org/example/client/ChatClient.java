@@ -10,10 +10,7 @@ import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.util.AttributeKey;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
-import org.example.client.handler.purity.PointToPointCommunicateResponseHandler;
-import org.example.client.handler.purity.SimpleLoginClientHandler;
-import org.example.client.handler.purity.SimpleLoginResponseHandler;
-import org.example.client.handler.purity.SimpleMessageResponseHandler;
+import org.example.client.handler.purity.*;
 import org.example.client.handler.security.AuthHandler;
 import org.example.client.handler.simple.LoginClientHandler;
 import org.example.client.handler.simple.MessageClientHandler;
@@ -38,7 +35,7 @@ public class ChatClient {
 
                 .handler(new ChannelInitializer<SocketChannel>() {
                     @Override
-                    protected void initChannel(SocketChannel ch) throws Exception {
+                    protected void initChannel(SocketChannel ch) {
 //                        ch.pipeline().addLast(new StringDecoder());
 //                        ch.pipeline().addLast(new SimpleChannelInboundHandler<String>() {
 //                            @Override
@@ -70,6 +67,7 @@ public class ChatClient {
         ch.pipeline().addLast(new AuthHandler());
         ch.pipeline().addLast(new SimpleMessageResponseHandler());
         ch.pipeline().addLast(new PointToPointCommunicateResponseHandler());
+        ch.pipeline().addLast(new GlobalUserInfoResponseHandler());
     }
 
     private static void simpleMethod(SocketChannel ch) {
@@ -87,25 +85,22 @@ public class ChatClient {
         chatBootstrap.connect(
                         config.getRawValueFromOption(ChatConfiguration.serverIp), // ip 配置
                         config.getRawValueFromOption(ChatConfiguration.serverPort)) // port 配置
-                .addListener(new GenericFutureListener<Future<? super Void>>() {
-                    @Override
-                    public void operationComplete(Future<? super Void> future) throws Exception {
-                        if (future.isSuccess()) {
-                            System.out.println("连接成功+");
-                            Channel channel = ((ChannelFuture) future).channel();
+                .addListener(future -> {
+                    if (future.isSuccess()) {
+                        System.out.println("连接成功+");
+                        Channel channel = ((ChannelFuture) future).channel();
 //                            LineCommandShell.startThread(channel);
-                            CommunicateCommandShell.startThread(channel);
-                        } else if (retry == 0) {
-                            System.out.println("stop ");
-                        } else {
-                            // 指数退避法则
-                            int order = MAX_RETRY - retry + 1;
-                            int sleepSec = 1 << order;
-                            System.out.println("sleepSec: " + sleepSec);
-                            // 优化
-                            chatBootstrap.config().group().schedule(() -> retryConnect(chatBootstrap,config, retry - 1), sleepSec, TimeUnit.SECONDS);
-                            System.out.println("失败");
-                        }
+                        CommunicateCommandShell.startThread(channel);
+                    } else if (retry == 0) {
+                        System.out.println("stop ");
+                    } else {
+                        // 指数退避法则
+                        int order = MAX_RETRY - retry + 1;
+                        int sleepSec = 1 << order;
+                        System.out.println("sleepSec: " + sleepSec);
+                        // 优化
+                        chatBootstrap.config().group().schedule(() -> retryConnect(chatBootstrap,config, retry - 1), sleepSec, TimeUnit.SECONDS);
+                        System.out.println("失败");
                     }
                 });
     }

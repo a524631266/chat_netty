@@ -10,5 +10,7 @@ public interface Command {
     Byte POINT_TO_POINT_MESSAGE_REQUEST = 5; // 点对点消息发送请求
     Byte POINT_TO_POINT_MESSAGE_RESPONSE = 6; // 点对点消息发送响应
 
+    Byte GLOBAL_USER_INFO_MESSAGE_REQUEST = 7; // 全局用户信息  请求指令
+    Byte GLOBAL_USER_INFO_MESSAGE_RESPONSE = 8; // 全局用户信息 返回包
 }
 

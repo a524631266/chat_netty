@@ -5,6 +5,8 @@ import io.netty.buffer.ByteBufAllocator;
 import org.example.codec.line.model.MessageReqPacket;
 import org.example.codec.line.model.MessageRespPacket;
 import org.example.codec.model.*;
+import org.example.codec.model.getuserinfos.GlobalUserInfoRequestPacket;
+import org.example.codec.model.getuserinfos.GlobalUserInfoResponsePacket;
 import org.example.codec.model.sendToUser.PointToPointCommunicateRequestPacket;
 import org.example.codec.model.sendToUser.PointToPointCommunicateResponsePacket;
 
@@ -113,9 +115,12 @@ public class PacketCodeC {
             return PointToPointCommunicateResponsePacket.class;
         } else if (command == Command.POINT_TO_POINT_MESSAGE_REQUEST) {
             return PointToPointCommunicateRequestPacket.class;
+        } else if (command == Command.GLOBAL_USER_INFO_MESSAGE_RESPONSE) {
+            return GlobalUserInfoResponsePacket.class;
+        } else if (command == Command.GLOBAL_USER_INFO_MESSAGE_REQUEST) {
+            return GlobalUserInfoRequestPacket.class;
         }
-        // 返回 null 表示过滤
-        return null;
+        throw new RuntimeException("需要设置命令转换逻辑");
     }
 
     private Serializer getSerializer(byte serializerAlgorithm) {

@@ -7,23 +7,22 @@ import org.example.config.ChatConfiguration;
 import org.example.server.session.model.CommunicateContext;
 import org.example.server.session.model.Session;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Log4j2
 public class SessionManage {
     /**
      * 用户uid与前面的映射
      */
-    public static final Map<String, CommunicateContext> relationMap = Collections.synchronizedMap(new HashMap());
+    public static final Map<String, CommunicateContext> relationMap = Collections
+            .synchronizedMap(new HashMap<>());
 
     /**
      * updateSession 取名应该更关注语义，需要用bind
      *
-     * @param channel
-     * @param session
+     * @param channel 绑定session
+     * @param session session信息
      */
     public static void bindSession(Channel channel, Session session) {
         CommunicateContext context = CommunicateContext.builder()
@@ -39,7 +38,7 @@ public class SessionManage {
     /**
      * 取消绑定
      *
-     * @param channel
+     * @param channel 通过管道来取消绑定session
      */
     public static void unbindSession(Channel channel) {
         if (ChatConfiguration.serverSideHasLogin(channel)) {
@@ -56,6 +55,11 @@ public class SessionManage {
 
     public static CommunicateContext queryToUserId(String toUserId) {
         return relationMap.get(toUserId);
+    }
+    public static List<Session> getSessions(){
+        return relationMap.values()
+                .stream()
+                .map(CommunicateContext::getSession).collect(Collectors.toList());
     }
 
     public static Integer randomUid() {

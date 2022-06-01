@@ -5,6 +5,7 @@ import javax.annotation.Nullable;
 public enum CommandEnum {
     SEND_TO_USER("sendToUser", "单聊"),
     LOGOUT("exit", "登出"),
+    GET_USER("getUser", "获取用户信息"),
     CREATE_GROUP("createGroup", "创建组"),
 //    CREATE_GROUP("uniGroup", "关联组"),
     ;
