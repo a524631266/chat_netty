@@ -5,8 +5,8 @@ import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import lombok.extern.log4j.Log4j2;
-import org.example.codec.model.communicate.PointToPointCommunicateRequestPacket;
-import org.example.codec.model.communicate.PointToPointCommunicateResponsePacket;
+import org.example.codec.model.sendToUser.PointToPointCommunicateRequestPacket;
+import org.example.codec.model.sendToUser.PointToPointCommunicateResponsePacket;
 import org.example.server.session.SessionManage;
 import org.example.server.session.model.CommunicateContext;
 
@@ -14,12 +14,11 @@ import org.example.server.session.model.CommunicateContext;
 public class PointToPointCommunicateRequestHandler extends SimpleChannelInboundHandler<PointToPointCommunicateRequestPacket> {
     /**
      * 请求命令
-     * @param ctx
-     * @param packet
-     * @throws Exception
+     * @param ctx 上下文
+     * @param packet 指定的点对点请求体
      */
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, PointToPointCommunicateRequestPacket packet) throws Exception {
+    protected void channelRead0(ChannelHandlerContext ctx, PointToPointCommunicateRequestPacket packet) {
         String toUserId = packet.getToUserId();
         CommunicateContext context = SessionManage.queryToUserId(toUserId);
 

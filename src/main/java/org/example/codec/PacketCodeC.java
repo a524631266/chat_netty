@@ -5,8 +5,8 @@ import io.netty.buffer.ByteBufAllocator;
 import org.example.codec.line.model.MessageReqPacket;
 import org.example.codec.line.model.MessageRespPacket;
 import org.example.codec.model.*;
-import org.example.codec.model.communicate.PointToPointCommunicateRequestPacket;
-import org.example.codec.model.communicate.PointToPointCommunicateResponsePacket;
+import org.example.codec.model.sendToUser.PointToPointCommunicateRequestPacket;
+import org.example.codec.model.sendToUser.PointToPointCommunicateResponsePacket;
 
 public class PacketCodeC {
 
@@ -14,7 +14,7 @@ public class PacketCodeC {
 
     /**
      * double check 获取实例
-     * @return
+     * @return PacketCodeC
      */
     public static PacketCodeC getInstance(){
         if(INSTANCE == null) {
@@ -32,8 +32,8 @@ public class PacketCodeC {
     /**
      * 一个对象序列化为一个bytebuf对象
      *
-     * @param packet
-     * @return
+     * @param packet 编辑packet
+     * @return 返回一个ByteBuf
      */
     public ByteBuf encode(Packet packet) {
         // 创建一个byteBuf 对象 【io是什么？？】
@@ -44,8 +44,8 @@ public class PacketCodeC {
     /**
      * 一个对象序列化为一个bytebuf对象
      *
-     * @param packet
-     * @return
+     * @param packet 一个抽象的packet
+     * @return 返回netty通用的ByteBuf结构
      */
     public ByteBuf encode(ByteBuf byteBuf, Packet packet) {
         byte[] serialize = Serializer.DEFAULT.serialize(packet);
@@ -59,13 +59,12 @@ public class PacketCodeC {
         return byteBuf.slice();
     }
 
-    ;
 
     /**
      * 解码
      *
-     * @param byteBuf
-     * @return
+     * @param byteBuf netty通用的ByteBuf结构
+     * @return 返回一个抽象的Packet
      */
     public Packet decode(ByteBuf byteBuf) throws IllegalAccessException {
         //
@@ -98,8 +97,8 @@ public class PacketCodeC {
      * 通过命令方式返回，不用 if else 判断
      *
      * 用户可以指定命令模式来请
-     * @param command
-     * @return
+     * @param command 指令标识位
+     * @return 返沪i一个当前的指定的类名
      */
     private Class<? extends Packet> getCommand(byte command) {
         if(command == Command.LOGIN_REQUEST) {
@@ -119,7 +118,7 @@ public class PacketCodeC {
         return null;
     }
 
-    private Serializer getSerializer(byte serializerAlgorithm) throws IllegalAccessException {
+    private Serializer getSerializer(byte serializerAlgorithm) {
         if(serializerAlgorithm == Serializer.JSON_SERIALIZER) {
             return Serializer.DEFAULT;
         }
