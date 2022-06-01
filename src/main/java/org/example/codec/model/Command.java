@@ -15,5 +15,8 @@ public interface Command {
 
     Byte CREATE_GROUP_REQUEST = 9; // 全局用户信息  请求指令
     Byte CREATE_GROUP_RESPONSE = 10; // 全局用户信息 返回包
+
+    Byte HEARTBEAT_REQUEST = 11; // 心跳包保证系统稳定
+    Byte HEARTBEAT_RESPONSE = 12; // 心跳包保证系统稳定
 }
 

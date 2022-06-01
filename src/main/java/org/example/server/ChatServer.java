@@ -22,6 +22,7 @@ import org.example.server.handler.simple.LoginServerHandler;
 import org.example.server.handler.simple.MessageServerHandler;
 import org.example.server.handler.splicing.LoginResponseSplicingHandler;
 import org.example.server.handler.splicing.MyselfSpliter;
+import org.example.stable.IMIdleStateHandler;
 
 
 /**
@@ -87,11 +88,13 @@ public class ChatServer {
     }
 
     private static void purityMethod(NioSocketChannel ch) {
+        ch.pipeline().addLast(new IMIdleStateHandler());
         ch.pipeline().addLast(new LifeCycleTestHandler());
         ch.pipeline().addLast(new LengthFieldBasedFrameDecoder(Integer.MAX_VALUE, 7, 4));
         ch.pipeline().addLast(new PacketDecoder());
         ch.pipeline().addLast(new PacketEncoder());
         ch.pipeline().addLast(new SimpleLoginRequestHandler());
+        ch.pipeline().addLast(new HeartBeatRequestHandler());
         ch.pipeline().addLast(new SimpleMessageRequestHandler());
         ch.pipeline().addLast(new PointToPointCommunicateRequestHandler());
         ch.pipeline().addLast(new GlobalUserInfosRequestHandler());
@@ -114,6 +117,7 @@ public class ChatServer {
 //                            new ClientConnectMonitor().start();
                     } else {
                         // 不用 + 1
+                        System.out.println("启动失败:" + ip + ":" + port );
                         autoIncBind(chatBootstrap, config);
                     }
                 });

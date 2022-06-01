@@ -17,8 +17,10 @@ import org.example.client.handler.simple.MessageClientHandler;
 import org.example.client.handler.splicing.LoginRequestSplicingHandler;
 import org.example.codec.line.CommunicateCommandShell;
 import org.example.config.ChatConfiguration;
+import org.example.server.handler.purity.HeartBeatRequestHandler;
 import org.example.server.handler.purity.PacketDecoder;
 import org.example.server.handler.purity.PacketEncoder;
+import org.example.stable.IMIdleStateHandler;
 
 import java.util.concurrent.TimeUnit;
 
@@ -60,10 +62,15 @@ public class ChatClient {
     }
 
     private static void purityMethod(SocketChannel ch) {
+        ch.pipeline().addLast(new IMIdleStateHandler());
         ch.pipeline().addLast(new LengthFieldBasedFrameDecoder(Integer.MAX_VALUE, 7, 4));
         ch.pipeline().addLast(new PacketDecoder());
         ch.pipeline().addLast(new PacketEncoder());
         ch.pipeline().addLast(new SimpleLoginResponseHandler());
+
+        // 心跳包在登陆之后执行
+        ch.pipeline().addLast(new HeartBeatResponseHandler());
+
         ch.pipeline().addLast(new AuthHandler());
         ch.pipeline().addLast(new SimpleMessageResponseHandler());
         ch.pipeline().addLast(new PointToPointCommunicateResponseHandler());

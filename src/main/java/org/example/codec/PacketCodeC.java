@@ -9,6 +9,8 @@ import org.example.codec.model.creategroup.CreateGroupRequestPacket;
 import org.example.codec.model.creategroup.CreateGroupResponsePacket;
 import org.example.codec.model.getuserinfos.GlobalUserInfoRequestPacket;
 import org.example.codec.model.getuserinfos.GlobalUserInfoResponsePacket;
+import org.example.codec.model.heartbeat.HeartBeatRequestPacket;
+import org.example.codec.model.heartbeat.HeartBeatResponsePacket;
 import org.example.codec.model.sendToUser.PointToPointCommunicateRequestPacket;
 import org.example.codec.model.sendToUser.PointToPointCommunicateResponsePacket;
 
@@ -121,10 +123,14 @@ public class PacketCodeC {
             return GlobalUserInfoResponsePacket.class;
         } else if (command == Command.GLOBAL_USER_INFO_MESSAGE_REQUEST) {
             return GlobalUserInfoRequestPacket.class;
-        }else if (command == Command.CREATE_GROUP_RESPONSE) {
+        } else if (command == Command.CREATE_GROUP_RESPONSE) {
             return CreateGroupResponsePacket.class;
         } else if (command == Command.CREATE_GROUP_REQUEST) {
             return CreateGroupRequestPacket.class;
+        }else if (command == Command.HEARTBEAT_RESPONSE) {
+            return HeartBeatResponsePacket.class;
+        } else if (command == Command.HEARTBEAT_REQUEST) {
+            return HeartBeatRequestPacket.class;
         }
         throw new RuntimeException("需要设置命令转换逻辑");
     }
