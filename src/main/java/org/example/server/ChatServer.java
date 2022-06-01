@@ -2,6 +2,7 @@ package org.example.server;
 
 import io.netty.bootstrap.ServerBootstrap;
 
+import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -66,7 +67,20 @@ public class ChatServer {
                         //
                     }
                 });
-        autoIncBind(chatBootstrap, config);
+        ChannelFuture channelFuture = autoIncBind(chatBootstrap, config);
+
+        close(channelFuture, acceptor, workers);
+    }
+
+    private void close(ChannelFuture channelFuture, NioEventLoopGroup acceptor, NioEventLoopGroup workers) {
+        try {
+            channelFuture.channel().closeFuture().sync();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } finally {
+            workers.shutdownGracefully();
+            acceptor.shutdownGracefully();
+        }
     }
 
     private static void splicingMethod(NioSocketChannel ch) {
@@ -106,11 +120,11 @@ public class ChatServer {
      * 自动递增聊天
      *
      */
-    private static void autoIncBind(ServerBootstrap chatBootstrap, ChatConfiguration config) {
+    private static ChannelFuture autoIncBind(ServerBootstrap chatBootstrap, ChatConfiguration config) {
         String ip = config.getRawValueFromOption(ChatConfiguration.serverIp);// ip 配置
         Integer port = config.getRawValueFromOption(ChatConfiguration.serverPort); // port 配置
-        chatBootstrap.bind(ip, port) // port 配置
-                .addListener(future -> {
+        ChannelFuture channelFuture = chatBootstrap.bind(ip, port);
+        channelFuture.addListener(future -> {
                     if (future.isSuccess()) {
                         System.out.println("启动成功:" + ip + ":" + port );
                         // 启动一个自定义监控链接
@@ -121,5 +135,6 @@ public class ChatServer {
                         autoIncBind(chatBootstrap, config);
                     }
                 });
+        return channelFuture;
     }
 }
