@@ -17,7 +17,7 @@ public class CommunicateCommandShell {
 
             showCommandInfo();
 
-            while (!Thread.interrupted()) {
+            while (!Thread.interrupted() && channel.isActive()) {
                 if (!ChatConfiguration.hasLogin(channel)) {
                     System.out.print("输入用户名: > ");
                     Scanner sc = new Scanner(System.in);
@@ -42,7 +42,7 @@ public class CommunicateCommandShell {
         Map<CommandEnum, ConsoleCommand> consoleCommandMap = new ConsoleCommandManager().getConsoleCommandMap();
         for (Map.Entry<CommandEnum, ConsoleCommand> entry : consoleCommandMap.entrySet()) {
             CommandEnum key = entry.getKey();
-            System.out.println(String.format("指令: [%s], 功能 [ %s ]", key.getCommand(), key.getName()));
+            System.out.printf("指令: [%s], 功能 [ %s ]%n", key.getCommand(), key.getName());
         }
     }
 

@@ -58,7 +58,24 @@ public class ChatClient {
                     }
                 });
 
-        retryConnect(chatBootstrap, config, 2);
+        ChannelFuture channelFuture = retryConnect(chatBootstrap, config, 2);
+
+        waitToClose(channelFuture, workers);
+    }
+
+    /**
+     * 优雅关闭channel
+     *
+     */
+    private void waitToClose(ChannelFuture channelFuture, NioEventLoopGroup workers) {
+        try {
+            // 在没有响应之前不需要关闭。也就是在应用层调用当前 channel().close()会触发同步
+            channelFuture.channel().closeFuture().sync();
+            // 优雅关闭链接
+            workers.shutdownGracefully();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     private static void purityMethod(SocketChannel ch) {
@@ -89,28 +106,30 @@ public class ChatClient {
         ch.pipeline().addLast(new LoginRequestSplicingHandler());
     }
 
-    private static void retryConnect(Bootstrap chatBootstrap, ChatConfiguration config, int retry) {
-        chatBootstrap.connect(
-                        config.getRawValueFromOption(ChatConfiguration.serverIp), // ip 配置
-                        config.getRawValueFromOption(ChatConfiguration.serverPort)) // port 配置
-                .addListener(future -> {
-                    if (future.isSuccess()) {
-                        System.out.println("连接成功+");
-                        Channel channel = ((ChannelFuture) future).channel();
+    private static ChannelFuture retryConnect(Bootstrap chatBootstrap, ChatConfiguration config, int retry) {
+        String ip = config.getRawValueFromOption(ChatConfiguration.serverIp);// ip 配置
+        Integer port = config.getRawValueFromOption(ChatConfiguration.serverPort);
+        ChannelFuture connect = chatBootstrap.connect(ip, port);// port 配置
+        connect.addListener(future -> {
+            if (future.isSuccess()) {
+                System.out.println("连接成功+");
+                Channel channel = ((ChannelFuture) future).channel();
 //                            LineCommandShell.startThread(channel);
-                        CommunicateCommandShell.startThread(channel);
-                    } else if (retry == 0) {
-                        System.out.println("stop ");
-                    } else {
-                        // 指数退避法则
-                        int order = MAX_RETRY - retry + 1;
-                        int sleepSec = 1 << order;
-                        System.out.println("sleepSec: " + sleepSec);
-                        // 优化
-                        chatBootstrap.config().group().schedule(() -> retryConnect(chatBootstrap,config, retry - 1), sleepSec, TimeUnit.SECONDS);
-                        System.out.println("失败");
-                    }
-                });
+                CommunicateCommandShell.startThread(channel);
+            } else if (retry == 0) {
+                System.out.println("超过最大尝试次数" + MAX_RETRY);
+                connect.channel().close();
+            } else {
+                // 指数退避法则
+                int order = MAX_RETRY - retry + 1;
+                int sleepSec = 1 << order;
+                System.out.println("sleepSec: " + sleepSec);
+                // 优化
+                chatBootstrap.config().group().schedule(() -> retryConnect(chatBootstrap, config, retry - 1), sleepSec, TimeUnit.SECONDS);
+                System.out.println("失败");
+            }
+        });
+        return connect;
     }
 
 
