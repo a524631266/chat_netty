@@ -112,7 +112,12 @@ public class ChatServer {
         ch.pipeline().addLast(new SimpleMessageRequestHandler());
         ch.pipeline().addLast(new PointToPointCommunicateRequestHandler());
         ch.pipeline().addLast(new GlobalUserInfosRequestHandler());
+
+        // 组管理
         ch.pipeline().addLast(new CreateGroupRequestHandler());
+        ch.pipeline().addLast(new QueryAllGroupRequestHandler());
+        ch.pipeline().addLast(new JoinGroupRequestHandler());
+        ch.pipeline().addLast(new MessageGroupRequestHandler());
 
     }
 

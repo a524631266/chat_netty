@@ -16,5 +16,6 @@ public class Session implements Serializable {
     public static final long serialVersionUID = 123455666L;
     private String userId;
     private String userName;
+    private int state;
 //    private String sessionId;
 }

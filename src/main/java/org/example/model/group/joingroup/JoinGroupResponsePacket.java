@@ -5,7 +5,6 @@ import lombok.EqualsAndHashCode;
 import org.example.model.Command;
 import org.example.model.Packet;
 import org.example.server.session.model.Session;
-import org.example.server.session.model.StateSession;
 
 import java.util.List;
 
@@ -18,7 +17,7 @@ public class JoinGroupResponsePacket extends Packet {
     Boolean success;
     String reason;
     String groupId;
-    List<StateSession> users;
+    List<Session> users;
 
     @Override
     public Byte getCommand() {

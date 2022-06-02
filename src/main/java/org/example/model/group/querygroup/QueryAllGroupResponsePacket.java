@@ -4,7 +4,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.example.model.Command;
 import org.example.model.Packet;
-import org.example.server.session.model.StateSession;
 
 import java.util.List;
 
