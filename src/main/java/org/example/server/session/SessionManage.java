@@ -142,10 +142,7 @@ public class SessionManage {
     /**
      * 查询并加入组
      * 如果没有查到返回一个空列表
-     *
-     * @param channel
-     * @param groupId
-     * @return
+
      */
     public static GroupContext queryAndJoinGroup(Channel channel, String groupId) {
 
@@ -154,11 +151,14 @@ public class SessionManage {
 
             return null;
         } else {
-            List<Session> usersHistorySession = groupContext.getUsers();
+
             ChannelGroup group = groupContext.getGroup();
-            // todo 是否可以重复加入，重复加入是否会重发消息。 不会 因为 是一个set集合
+            // todo 是否可以重复加入，重复加入是否会重发消息。 不会 因为 是一个set集合，实践表面不会进行设置
             group.add(channel);
-            List<Session> stateSessions = getStateSessions(usersHistorySession);
+            groupContext.add(querySession(channel));
+
+            List<Session> stateSessions = getStateSessions(groupContext.getUsers());
+
             return GroupContext.builder()
                     .groupId(groupContext.getGroupId())
                     .group(group)
@@ -167,33 +167,38 @@ public class SessionManage {
         }
     }
 
+    private static Session querySession(Channel channel) {
+        Optional<CommunicateContext> first = relationMap.values().stream().filter(a -> a.getChannel().equals(channel)).findFirst();
+        if (!first.isPresent()) {
+            throw new RuntimeException("无法找到当前用户的状态信息");
+        }
+        return first.get().getSession();
+    }
+
     private static List<Session> getStateSessions(List<Session> usersHistorySession) {
-        List<Session> stateSessions = usersHistorySession.stream()
+        return usersHistorySession.stream()
                 .map(a -> Session.builder()
                         .userId(a.getUserId())
                         .userName(a.getUserName())
                         .state(getStateSessions(a.getUserId()))
                         .build()
                 ).collect(Collectors.toList());
-        return stateSessions;
     }
 
     /**
      * 包含所有用户状态
-     * @param userId
-     * @return
+     *
      */
     private static int getStateSessions(String userId) {
         CommunicateContext sessionContext = getSessionBy(userId);
-        if(Objects.isNull(sessionContext)) {
+        if (Objects.isNull(sessionContext)) {
             return 0;
         }
-        return sessionContext.getChannel().isActive() ? 1: 0;
+        return sessionContext.getChannel().isActive() ? 1 : 0;
     }
 
     private static CommunicateContext getSessionBy(String userId) {
-        CommunicateContext context = relationMap.get(userId);
-        return context;
+        return relationMap.get(userId);
     }
 
     public static List<GroupInfo> queryAllGroups() {
