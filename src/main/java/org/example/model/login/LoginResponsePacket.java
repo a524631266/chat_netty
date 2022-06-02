@@ -1,7 +1,9 @@
-package org.example.model;
+package org.example.model.login;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.example.model.Command;
+import org.example.model.Packet;
 
 @EqualsAndHashCode(callSuper = true)
 @Data

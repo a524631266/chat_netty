@@ -3,8 +3,8 @@ package org.example.server.handler.purity;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import lombok.extern.log4j.Log4j2;
-import org.example.model.LoginRequestPacket;
-import org.example.model.LoginResponsePacket;
+import org.example.model.login.LoginRequestPacket;
+import org.example.model.login.LoginResponsePacket;
 import org.example.server.session.SessionManage;
 import org.example.server.session.model.Session;
 

@@ -4,7 +4,7 @@ import io.netty.channel.Channel;
 import org.example.client.command.CommandEnum;
 import org.example.client.command.ConsoleCommand;
 import org.example.client.command.ConsoleCommandManager;
-import org.example.model.LoginRequestPacket;
+import org.example.model.login.LoginRequestPacket;
 import org.example.config.ChatConfiguration;
 
 import java.util.Map;

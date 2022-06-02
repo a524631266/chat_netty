@@ -6,8 +6,8 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.group.DefaultChannelGroup;
 import lombok.extern.log4j.Log4j2;
-import org.example.model.creategroup.CreateGroupRequestPacket;
-import org.example.model.creategroup.CreateGroupResponsePacket;
+import org.example.model.group.creategroup.CreateGroupRequestPacket;
+import org.example.model.group.creategroup.CreateGroupResponsePacket;
 import org.example.server.session.SessionManage;
 import org.example.server.session.model.GroupContext;
 

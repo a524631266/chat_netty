@@ -2,11 +2,16 @@ package org.example.codec;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
+import org.example.model.group.joingroup.JoinGroupRequestPacket;
+import org.example.model.group.querygroup.QueryGroupRequestPacket;
+import org.example.model.group.querygroup.QueryGroupResponsePacket;
+import org.example.model.login.LoginRequestPacket;
+import org.example.model.login.LoginResponsePacket;
 import org.example.model.message.MessageReqPacket;
 import org.example.model.message.MessageRespPacket;
 import org.example.model.*;
-import org.example.model.creategroup.CreateGroupRequestPacket;
-import org.example.model.creategroup.CreateGroupResponsePacket;
+import org.example.model.group.creategroup.CreateGroupRequestPacket;
+import org.example.model.group.creategroup.CreateGroupResponsePacket;
 import org.example.model.getuserinfos.GlobalUserInfoRequestPacket;
 import org.example.model.getuserinfos.GlobalUserInfoResponsePacket;
 import org.example.model.heartbeat.HeartBeatRequestPacket;
@@ -20,12 +25,13 @@ public class PacketCodeC {
 
     /**
      * double check 获取实例
+     *
      * @return PacketCodeC
      */
-    public static PacketCodeC getInstance(){
-        if(INSTANCE == null) {
-            synchronized (PacketCodeC.class){
-                if(INSTANCE == null) {
+    public static PacketCodeC getInstance() {
+        if (INSTANCE == null) {
+            synchronized (PacketCodeC.class) {
+                if (INSTANCE == null) {
                     INSTANCE = new PacketCodeC();
                 }
             }
@@ -90,7 +96,7 @@ public class PacketCodeC {
 
         Serializer serializer = getSerializer(serializerAlgorithm);
         Class<? extends Packet> requestType = getCommand(command);
-        if(requestType != null && serializer != null) {
+        if (requestType != null && serializer != null) {
             Packet packet = serializer.deserialize(requestType, body);
             packet.setVersion(version);
             return packet;
@@ -101,42 +107,18 @@ public class PacketCodeC {
 
     /**
      * 通过命令方式返回，不用 if else 判断
-     *
+     * <p>
      * 用户可以指定命令模式来请
+     *
      * @param command 指令标识位
      * @return 返沪i一个当前的指定的类名
      */
     private Class<? extends Packet> getCommand(byte command) {
-        if(command == Command.LOGIN_REQUEST) {
-            return LoginRequestPacket.class;
-        } else if (command == Command.LOGIN_RESPONSE) {
-            return LoginResponsePacket.class;
-        } else if (command == Command.MESSAGE_REQUEST) {
-            return MessageReqPacket.class;
-        } else if (command == Command.MESSAGE_RESPONSE) {
-            return MessageRespPacket.class;
-        } else if (command == Command.POINT_TO_POINT_MESSAGE_RESPONSE) {
-            return PointToPointCommunicateResponsePacket.class;
-        } else if (command == Command.POINT_TO_POINT_MESSAGE_REQUEST) {
-            return PointToPointCommunicateRequestPacket.class;
-        } else if (command == Command.GLOBAL_USER_INFO_MESSAGE_RESPONSE) {
-            return GlobalUserInfoResponsePacket.class;
-        } else if (command == Command.GLOBAL_USER_INFO_MESSAGE_REQUEST) {
-            return GlobalUserInfoRequestPacket.class;
-        } else if (command == Command.CREATE_GROUP_RESPONSE) {
-            return CreateGroupResponsePacket.class;
-        } else if (command == Command.CREATE_GROUP_REQUEST) {
-            return CreateGroupRequestPacket.class;
-        }else if (command == Command.HEARTBEAT_RESPONSE) {
-            return HeartBeatResponsePacket.class;
-        } else if (command == Command.HEARTBEAT_REQUEST) {
-            return HeartBeatRequestPacket.class;
-        }
-        throw new RuntimeException("需要设置命令转换逻辑");
+        return Command.getCommand(command);
     }
 
     private Serializer getSerializer(byte serializerAlgorithm) {
-        if(serializerAlgorithm == Serializer.JSON_SERIALIZER) {
+        if (serializerAlgorithm == Serializer.JSON_SERIALIZER) {
             return Serializer.DEFAULT;
         }
         // 返回 null 表示过滤

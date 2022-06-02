@@ -2,7 +2,7 @@ package org.example.codec;
 
 import com.alibaba.fastjson.JSON;
 import io.netty.buffer.ByteBuf;
-import org.example.model.LoginRequestPacket;
+import org.example.model.login.LoginRequestPacket;
 import org.example.model.Packet;
 import org.junit.Assert;
 import org.junit.Test;

@@ -3,7 +3,7 @@ package org.example.client.handler.purity;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import lombok.extern.log4j.Log4j2;
-import org.example.model.LoginResponsePacket;
+import org.example.model.login.LoginResponsePacket;
 import org.example.config.ChatConfiguration;
 
 import java.util.UUID;

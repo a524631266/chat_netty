@@ -1,10 +1,11 @@
-package org.example.model.creategroup;
+package org.example.model.group.querygroup;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.example.model.Command;
 import org.example.model.Packet;
 import org.example.server.session.model.Session;
+import org.example.server.session.model.StateSession;
 
 import java.util.List;
 
@@ -13,14 +14,12 @@ import java.util.List;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class CreateGroupResponsePacket extends Packet {
-    Boolean success;
-    String reason;
+public class QueryGroupResponsePacket extends Packet {
     String groupId;
-    List<Session> userNames;
+    List<StateSession> users;
 
     @Override
     public Byte getCommand() {
-        return Command.CREATE_GROUP_RESPONSE;
+        return Command.QUERY_GROUP_RESPONSE;
     }
 }

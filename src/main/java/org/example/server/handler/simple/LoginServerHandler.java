@@ -4,8 +4,8 @@ import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import org.example.codec.PacketCodeC;
-import org.example.model.LoginRequestPacket;
-import org.example.model.LoginResponsePacket;
+import org.example.model.login.LoginRequestPacket;
+import org.example.model.login.LoginResponsePacket;
 import org.example.model.Packet;
 import org.example.config.ChatConfiguration;
 

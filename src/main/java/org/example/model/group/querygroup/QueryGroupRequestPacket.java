@@ -1,18 +1,16 @@
-package org.example.model.creategroup;
+package org.example.model.group.querygroup;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.example.model.Command;
 import org.example.model.Packet;
 
-import java.util.List;
-
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class CreateGroupRequestPacket extends Packet {
-    List<String> userIds;
+public class QueryGroupRequestPacket extends Packet {
+    String groupId;
     @Override
     public Byte getCommand() {
-        return Command.CREATE_GROUP_REQUEST;
+        return Command.QUERY_GROUP_REQUEST;
     }
 }
