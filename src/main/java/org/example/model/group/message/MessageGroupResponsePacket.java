@@ -14,10 +14,8 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class MessageGroupResponsePacket extends Packet {
-    Boolean success;
-    String reason;
     String groupId;
-    List<Session> userNames;
+    String message;
 
     @Override
     public Byte getCommand() {

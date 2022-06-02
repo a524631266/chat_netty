@@ -7,6 +7,9 @@ public enum CommandEnum {
     LOGOUT("exit", "登出"),
     GET_USER("getUser", "获取用户信息"),
     CREATE_GROUP("createGroup", "创建组"),
+    QUERY_ALL_GROUP("queryAllGroup", "查询组"),
+    JOIN_GROUP("joinGroup", "加入组"),
+    TALK_GROUP("talkGroup", "组内通话"),
 //    CREATE_GROUP("uniGroup", "关联组"),
     ;
     String command;

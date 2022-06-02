@@ -7,8 +7,8 @@ import org.example.model.group.creategroup.CreateGroupResponsePacket;
 import org.example.model.group.joingroup.JoinGroupRequestPacket;
 import org.example.model.group.message.MessageGroupRequestPacket;
 import org.example.model.group.message.MessageGroupResponsePacket;
-import org.example.model.group.querygroup.QueryGroupRequestPacket;
-import org.example.model.group.querygroup.QueryGroupResponsePacket;
+import org.example.model.group.querygroup.QueryAllGroupRequestPacket;
+import org.example.model.group.querygroup.QueryAllGroupResponsePacket;
 import org.example.model.heartbeat.HeartBeatRequestPacket;
 import org.example.model.heartbeat.HeartBeatResponsePacket;
 import org.example.model.login.LoginRequestPacket;
@@ -40,8 +40,8 @@ public interface Command {
     Byte JOIN_GROUP_REQUEST = 13; // 请求登陆group id
     Byte JOIN_GROUP_RESPONSE = 14; // 返回登陆
 
-    Byte QUERY_GROUP_REQUEST = 15; // 请求登陆group id
-    Byte QUERY_GROUP_RESPONSE = 16; // 返回登陆
+    Byte QUERY_ALL_GROUP_REQUEST = 15; // 请求登陆group id
+    Byte QUERY_ALL_GROUP_RESPONSE = 16; // 返回登陆
 
     Byte MESSAGE_GROUP_REQUEST = 17; // message请求指令
     Byte MESSAGE_GROUP_RESPONSE = 18; // message响应指令
@@ -76,10 +76,10 @@ public interface Command {
             return JoinGroupRequestPacket.class;
         } else if (command == Command.JOIN_GROUP_REQUEST) {
             return JoinGroupRequestPacket.class;
-        } else if (command == Command.QUERY_GROUP_RESPONSE) {
-            return QueryGroupResponsePacket.class;
-        } else if (command == Command.QUERY_GROUP_REQUEST) {
-            return QueryGroupRequestPacket.class;
+        } else if (command == Command.QUERY_ALL_GROUP_RESPONSE) {
+            return QueryAllGroupResponsePacket.class;
+        } else if (command == Command.QUERY_ALL_GROUP_REQUEST) {
+            return QueryAllGroupRequestPacket.class;
         } else if (command == Command.MESSAGE_GROUP_REQUEST) {
             return MessageGroupRequestPacket.class;
         } else if (command == Command.MESSAGE_GROUP_RESPONSE) {

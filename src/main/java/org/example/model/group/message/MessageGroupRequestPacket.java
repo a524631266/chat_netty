@@ -10,7 +10,8 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class MessageGroupRequestPacket extends Packet {
-    List<String> userIds;
+    String groupId;
+    String message;
     @Override
     public Byte getCommand() {
         return Command.MESSAGE_GROUP_REQUEST;

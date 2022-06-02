@@ -2,22 +2,7 @@ package org.example.codec;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
-import org.example.model.group.joingroup.JoinGroupRequestPacket;
-import org.example.model.group.querygroup.QueryGroupRequestPacket;
-import org.example.model.group.querygroup.QueryGroupResponsePacket;
-import org.example.model.login.LoginRequestPacket;
-import org.example.model.login.LoginResponsePacket;
-import org.example.model.message.MessageReqPacket;
-import org.example.model.message.MessageRespPacket;
 import org.example.model.*;
-import org.example.model.group.creategroup.CreateGroupRequestPacket;
-import org.example.model.group.creategroup.CreateGroupResponsePacket;
-import org.example.model.getuserinfos.GlobalUserInfoRequestPacket;
-import org.example.model.getuserinfos.GlobalUserInfoResponsePacket;
-import org.example.model.heartbeat.HeartBeatRequestPacket;
-import org.example.model.heartbeat.HeartBeatResponsePacket;
-import org.example.model.sendToUser.PointToPointCommunicateRequestPacket;
-import org.example.model.sendToUser.PointToPointCommunicateResponsePacket;
 
 public class PacketCodeC {
 

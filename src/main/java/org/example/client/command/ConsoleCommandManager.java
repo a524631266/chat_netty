@@ -18,6 +18,9 @@ public class ConsoleCommandManager implements ConsoleCommand {
         consoleCommandMap.put(CommandEnum.LOGOUT, new LogoutConsoleCommand());
         consoleCommandMap.put(CommandEnum.GET_USER, new GlobalUserInfoCommand());
         consoleCommandMap.put(CommandEnum.CREATE_GROUP, new CreateGroupCommand());
+        consoleCommandMap.put(CommandEnum.JOIN_GROUP, new JoinGroupCommand());
+        consoleCommandMap.put(CommandEnum.TALK_GROUP, new MessageGroupCommand());
+        consoleCommandMap.put(CommandEnum.QUERY_ALL_GROUP, new QueryAllGroupCommand());
     }
     private ConsoleCommand getConsoleCommand(String command) {
        return consoleCommandMap.get(CommandEnum.codeOf(command));

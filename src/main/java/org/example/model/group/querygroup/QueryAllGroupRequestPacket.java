@@ -7,10 +7,9 @@ import org.example.model.Packet;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class QueryGroupRequestPacket extends Packet {
-    String groupId;
+public class QueryAllGroupRequestPacket extends Packet {
     @Override
     public Byte getCommand() {
-        return Command.QUERY_GROUP_REQUEST;
+        return Command.QUERY_ALL_GROUP_REQUEST;
     }
 }
