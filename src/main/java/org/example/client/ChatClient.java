@@ -92,7 +92,11 @@ public class ChatClient {
         ch.pipeline().addLast(new SimpleMessageResponseHandler());
         ch.pipeline().addLast(new PointToPointCommunicateResponseHandler());
         ch.pipeline().addLast(new GlobalUserInfoResponseHandler());
+        // 组管理
         ch.pipeline().addLast(new CreateGroupResponseHandler());
+        ch.pipeline().addLast(new JoinGroupResponseHandler());
+        ch.pipeline().addLast(new MessageGroupResponseHandler());
+        ch.pipeline().addLast(new QueryAllGroupResponseHandler());
     }
 
     private static void simpleMethod(SocketChannel ch) {
