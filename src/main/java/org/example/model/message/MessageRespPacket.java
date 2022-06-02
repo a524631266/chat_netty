@@ -1,9 +1,10 @@
-package org.example.codec.line.model;
+package org.example.model.message;
 
 import lombok.Data;
-import org.example.codec.model.Command;
-import org.example.codec.model.Packet;
-
+import lombok.EqualsAndHashCode;
+import org.example.model.Command;
+import org.example.model.Packet;
+@EqualsAndHashCode(callSuper = true)
 @Data
 public class MessageRespPacket extends Packet {
     private String message;

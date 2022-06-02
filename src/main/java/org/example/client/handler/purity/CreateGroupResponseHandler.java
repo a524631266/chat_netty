@@ -4,12 +4,8 @@ import com.google.common.base.Joiner;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import lombok.extern.log4j.Log4j2;
-import org.example.codec.model.creategroup.CreateGroupResponsePacket;
-import org.example.codec.model.getuserinfos.GlobalUserInfoResponsePacket;
-import org.example.codec.model.getuserinfos.UserInfo;
+import org.example.model.creategroup.CreateGroupResponsePacket;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 

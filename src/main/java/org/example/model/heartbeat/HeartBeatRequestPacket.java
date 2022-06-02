@@ -1,11 +1,9 @@
-package org.example.codec.model.heartbeat;
+package org.example.model.heartbeat;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.example.codec.model.Command;
-import org.example.codec.model.Packet;
-
-import java.util.List;
+import org.example.model.Command;
+import org.example.model.Packet;
 
 @EqualsAndHashCode(callSuper = true)
 @Data

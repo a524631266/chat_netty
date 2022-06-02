@@ -2,8 +2,7 @@ package org.example.client.command;
 
 import com.google.common.base.Splitter;
 import io.netty.channel.Channel;
-import org.example.codec.model.creategroup.CreateGroupRequestPacket;
-import org.example.codec.model.sendToUser.PointToPointCommunicateRequestPacket;
+import org.example.model.creategroup.CreateGroupRequestPacket;
 
 import java.util.Scanner;
 

@@ -1,9 +1,9 @@
-package org.example.codec.model.creategroup;
+package org.example.model.creategroup;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.example.codec.model.Command;
-import org.example.codec.model.Packet;
+import org.example.model.Command;
+import org.example.model.Packet;
 import org.example.server.session.model.Session;
 
 import java.util.List;

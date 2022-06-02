@@ -1,4 +1,4 @@
-package org.example.codec.model;
+package org.example.model;
 
 public interface SerializerAlgorithm {
     /**

@@ -5,9 +5,9 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import lombok.extern.log4j.Log4j2;
 import org.example.codec.PacketCodeC;
-import org.example.codec.model.LoginRequestPacket;
-import org.example.codec.model.LoginResponsePacket;
-import org.example.codec.model.Packet;
+import org.example.model.LoginRequestPacket;
+import org.example.model.LoginResponsePacket;
+import org.example.model.Packet;
 import org.example.config.ChatConfiguration;
 
 import java.util.UUID;
@@ -23,11 +23,10 @@ public class LoginClientHandler extends ChannelInboundHandlerAdapter {
      *  （1）       ctx.channel().alloc().buffer();
      *   （2）      ctx.channel().config().getAllocator()
      *   （3）      ctx.alloc().buffer();
-     * @param ctx
-     * @throws Exception
+     * @param ctx 上下文
      */
     @Override
-    public void channelActive(ChannelHandlerContext ctx) throws Exception {
+    public void channelActive(ChannelHandlerContext ctx)  {
         LoginRequestPacket packet = new LoginRequestPacket();
         packet.setPassword(password);
         packet.setUserId(userId);

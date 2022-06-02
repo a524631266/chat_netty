@@ -2,17 +2,17 @@ package org.example.codec;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
-import org.example.codec.line.model.MessageReqPacket;
-import org.example.codec.line.model.MessageRespPacket;
-import org.example.codec.model.*;
-import org.example.codec.model.creategroup.CreateGroupRequestPacket;
-import org.example.codec.model.creategroup.CreateGroupResponsePacket;
-import org.example.codec.model.getuserinfos.GlobalUserInfoRequestPacket;
-import org.example.codec.model.getuserinfos.GlobalUserInfoResponsePacket;
-import org.example.codec.model.heartbeat.HeartBeatRequestPacket;
-import org.example.codec.model.heartbeat.HeartBeatResponsePacket;
-import org.example.codec.model.sendToUser.PointToPointCommunicateRequestPacket;
-import org.example.codec.model.sendToUser.PointToPointCommunicateResponsePacket;
+import org.example.model.message.MessageReqPacket;
+import org.example.model.message.MessageRespPacket;
+import org.example.model.*;
+import org.example.model.creategroup.CreateGroupRequestPacket;
+import org.example.model.creategroup.CreateGroupResponsePacket;
+import org.example.model.getuserinfos.GlobalUserInfoRequestPacket;
+import org.example.model.getuserinfos.GlobalUserInfoResponsePacket;
+import org.example.model.heartbeat.HeartBeatRequestPacket;
+import org.example.model.heartbeat.HeartBeatResponsePacket;
+import org.example.model.sendToUser.PointToPointCommunicateRequestPacket;
+import org.example.model.sendToUser.PointToPointCommunicateResponsePacket;
 
 public class PacketCodeC {
 

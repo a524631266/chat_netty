@@ -1,7 +1,7 @@
 package org.example.client.command;
 
 import io.netty.channel.Channel;
-import org.example.codec.model.sendToUser.PointToPointCommunicateRequestPacket;
+import org.example.model.sendToUser.PointToPointCommunicateRequestPacket;
 
 import java.util.Scanner;
 

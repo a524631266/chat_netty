@@ -4,9 +4,9 @@ import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import org.example.codec.PacketCodeC;
-import org.example.codec.model.LoginRequestPacket;
-import org.example.codec.model.LoginResponsePacket;
-import org.example.codec.model.Packet;
+import org.example.model.LoginRequestPacket;
+import org.example.model.LoginResponsePacket;
+import org.example.model.Packet;
 import org.example.config.ChatConfiguration;
 
 import java.util.Date;
@@ -48,11 +48,9 @@ public class LoginServerHandler extends ChannelInboundHandlerAdapter {
 
     /**
      * 客户端断链之后会在server端获取到当前的状态
-     * @param ctx
-     * @throws Exception
      */
     @Override
-    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-        System.out.println("[" + new Date() + "] : 关闭链接" + ctx.attr(ChatConfiguration.LOGIN));
+    public void channelInactive(ChannelHandlerContext ctx) {
+        System.out.println("[" + new Date() + "] : 关闭链接" + ctx.channel().attr(ChatConfiguration.LOGIN));
     }
 }

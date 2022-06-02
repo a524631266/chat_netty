@@ -3,7 +3,7 @@ package org.example.client.handler.purity;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import lombok.extern.log4j.Log4j2;
-import org.example.codec.model.sendToUser.PointToPointCommunicateResponsePacket;
+import org.example.model.sendToUser.PointToPointCommunicateResponsePacket;
 
 
 @Log4j2

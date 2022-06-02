@@ -1,9 +1,9 @@
-package org.example.codec.model.getuserinfos;
+package org.example.model.getuserinfos;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.example.codec.model.Command;
-import org.example.codec.model.Packet;
+import org.example.model.Command;
+import org.example.model.Packet;
 
 import java.util.List;
 /**

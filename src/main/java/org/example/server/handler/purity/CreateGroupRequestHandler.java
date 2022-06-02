@@ -6,19 +6,12 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.group.DefaultChannelGroup;
 import lombok.extern.log4j.Log4j2;
-import org.example.codec.model.creategroup.CreateGroupRequestPacket;
-import org.example.codec.model.creategroup.CreateGroupResponsePacket;
-import org.example.codec.model.getuserinfos.GlobalUserInfoRequestPacket;
-import org.example.codec.model.getuserinfos.GlobalUserInfoResponsePacket;
-import org.example.codec.model.getuserinfos.UserInfo;
+import org.example.model.creategroup.CreateGroupRequestPacket;
+import org.example.model.creategroup.CreateGroupResponsePacket;
 import org.example.server.session.SessionManage;
-import org.example.server.session.model.CommunicateContext;
 import org.example.server.session.model.GroupContext;
-import org.example.server.session.model.Session;
 
-import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Log4j2
 public class CreateGroupRequestHandler extends SimpleChannelInboundHandler<CreateGroupRequestPacket> {

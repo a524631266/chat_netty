@@ -1,9 +1,6 @@
-package org.example.codec.model;
+package org.example.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.extern.jackson.Jacksonized;
 
 @Data
 //@NoArgsConstructor
@@ -17,7 +14,7 @@ public abstract class Packet {
 
     /**
      *
-     * @return
+     * @return 返回指令编号
      */
     public abstract Byte getCommand();
 }

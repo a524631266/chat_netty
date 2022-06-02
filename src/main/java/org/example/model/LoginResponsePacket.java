@@ -1,8 +1,9 @@
-package org.example.codec.model;
+package org.example.model;
 
-import com.alibaba.fastjson.annotation.JSONField;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 public class LoginResponsePacket extends Packet {
     private Integer userId;

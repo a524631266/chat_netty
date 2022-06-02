@@ -1,9 +1,9 @@
-package org.example.codec.model.sendToUser;
+package org.example.model.sendToUser;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.example.codec.model.Command;
-import org.example.codec.model.Packet;
+import org.example.model.Command;
+import org.example.model.Packet;
 
 @EqualsAndHashCode(callSuper = true)
 @Data

@@ -4,9 +4,9 @@ package org.example.server.handler.purity;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import lombok.extern.log4j.Log4j2;
-import org.example.codec.model.getuserinfos.GlobalUserInfoRequestPacket;
-import org.example.codec.model.getuserinfos.GlobalUserInfoResponsePacket;
-import org.example.codec.model.getuserinfos.UserInfo;
+import org.example.model.getuserinfos.GlobalUserInfoRequestPacket;
+import org.example.model.getuserinfos.GlobalUserInfoResponsePacket;
+import org.example.model.getuserinfos.UserInfo;
 import org.example.server.session.SessionManage;
 import org.example.server.session.model.Session;
 

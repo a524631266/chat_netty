@@ -1,4 +1,4 @@
-package org.example.codec.model.getuserinfos;
+package org.example.model.getuserinfos;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

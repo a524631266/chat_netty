@@ -2,14 +2,12 @@ package org.example.codec;
 
 import com.alibaba.fastjson.JSON;
 import io.netty.buffer.ByteBuf;
-import org.example.codec.model.LoginRequestPacket;
-import org.example.codec.model.Packet;
+import org.example.model.LoginRequestPacket;
+import org.example.model.Packet;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.UUID;
-
-import static org.junit.Assert.*;
 
 public class PacketCodeCTest {
     public static String password = "12345";

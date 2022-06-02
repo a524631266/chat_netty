@@ -3,7 +3,7 @@ package org.example.client.handler.purity;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import lombok.extern.log4j.Log4j2;
-import org.example.codec.model.LoginResponsePacket;
+import org.example.model.LoginResponsePacket;
 import org.example.config.ChatConfiguration;
 
 import java.util.UUID;
@@ -26,9 +26,6 @@ public class SimpleLoginResponseHandler extends SimpleChannelInboundHandler<Logi
 
     /**
      * 有且只有一次。在验证阶段过程中
-     * @param ctx
-     * @param msg
-     * @throws Exception
      */
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, LoginResponsePacket msg) throws Exception {

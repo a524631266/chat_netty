@@ -1,8 +1,7 @@
 package org.example.client.command;
 
 import io.netty.channel.Channel;
-import org.example.codec.model.getuserinfos.GlobalUserInfoRequestPacket;
-import org.example.codec.model.sendToUser.PointToPointCommunicateRequestPacket;
+import org.example.model.getuserinfos.GlobalUserInfoRequestPacket;
 
 import java.util.Scanner;
 

@@ -1,10 +1,10 @@
-package org.example.codec.model;
+package org.example.model;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.EqualsAndHashCode;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 //@NoArgsConstructor
 //@AllArgsConstructor

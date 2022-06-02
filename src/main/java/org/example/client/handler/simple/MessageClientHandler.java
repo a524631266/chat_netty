@@ -5,8 +5,8 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import lombok.extern.log4j.Log4j2;
 import org.example.codec.PacketCodeC;
-import org.example.codec.line.model.MessageRespPacket;
-import org.example.codec.model.Packet;
+import org.example.model.message.MessageRespPacket;
+import org.example.model.Packet;
 
 @Log4j2
 public class MessageClientHandler extends ChannelInboundHandlerAdapter {

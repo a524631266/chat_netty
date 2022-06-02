@@ -3,7 +3,7 @@ package org.example.codec.line;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
 import org.example.codec.PacketCodeC;
-import org.example.codec.line.model.MessageReqPacket;
+import org.example.model.message.MessageReqPacket;
 
 import java.util.Scanner;
 

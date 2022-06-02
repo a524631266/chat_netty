@@ -1,15 +1,11 @@
 package org.example.client.handler.purity;
 
-import com.google.common.base.Joiner;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import io.netty.channel.SimpleChannelInboundHandler;
 import lombok.extern.log4j.Log4j2;
-import org.example.codec.model.creategroup.CreateGroupResponsePacket;
-import org.example.codec.model.heartbeat.HeartBeatRequestPacket;
-import org.example.codec.model.heartbeat.HeartBeatResponsePacket;
+import org.example.model.heartbeat.HeartBeatRequestPacket;
+import org.example.model.heartbeat.HeartBeatResponsePacket;
 
-import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 

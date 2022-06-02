@@ -3,7 +3,7 @@ package org.example.client.handler.purity;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import lombok.extern.log4j.Log4j2;
-import org.example.codec.line.model.MessageRespPacket;
+import org.example.model.message.MessageRespPacket;
 
 @Log4j2
 public class SimpleMessageResponseHandler extends SimpleChannelInboundHandler<MessageRespPacket> {

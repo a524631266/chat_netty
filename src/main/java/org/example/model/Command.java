@@ -1,4 +1,4 @@
-package org.example.codec.model;
+package org.example.model;
 
 public interface Command {
     Byte LOGIN_REQUEST = 1; // 请求指令
